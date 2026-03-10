@@ -34,7 +34,7 @@ const admindashboard = () => {
 
                 // fetch user firstname 
                 const userRes = await axios.get(
-                    "http://localhost:5000/firstname",
+                    "https://community-issue-report-system-1.onrender.com/firstname",
                     {
                         headers: {
                             Authorization: `Bearer ${token}`
@@ -46,7 +46,7 @@ const admindashboard = () => {
 
                 // fetch user profile
                 const profileRes = await axios.get(
-                    "http://localhost:5000/adminprofile",
+                    "https://community-issue-report-system-1.onrender.com/adminprofile",
                     
                     {
                         headers: {
@@ -60,7 +60,7 @@ const admindashboard = () => {
 
                 // Fetch admin dashboard stats
                 const dashboardRes = await axios.get(
-                    "http://localhost:5000/admindashboardstats",
+                    "https://community-issue-report-system-1.onrender.com/admindashboardstats",
                     {
                         headers: {
                             Authorization: `Bearer ${token}`
@@ -72,7 +72,7 @@ const admindashboard = () => {
 
                 // Fetch recent reports
                 const res = await axios.get(
-                    "http://localhost:5000/adminallissueslimit",
+                    "https://community-issue-report-system-1.onrender.com/adminallissueslimit",
                     {
                         headers: {
                             Authorization: `Bearer ${token}`
@@ -99,7 +99,7 @@ const admindashboard = () => {
             const token = localStorage.getItem("accessToken")
 
             await axios.put(
-                `http://localhost:5000/updateStatus/${id}`,
+                `https://community-issue-report-system-1.onrender.com/updateStatus/${id}`,
                 { status: newStatus },
                 {
                     headers: {
@@ -130,7 +130,7 @@ const admindashboard = () => {
             const token = localStorage.getItem("accessToken")
 
             await axios.delete(
-                `http://localhost:5000/deleteIssue/${id}`,
+                `https://community-issue-report-system-1.onrender.com/deleteIssue/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`

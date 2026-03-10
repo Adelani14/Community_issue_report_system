@@ -30,7 +30,9 @@ app.use(cookieParser());
 // app.use("/uploads", express.static("uploads"))
 app.use("/uploads", express.static("uploads"))
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173",
+        "https://communityissuereportsystem.vercel.app/"
+    ],
     credentials: true
 }));
 
@@ -89,7 +91,7 @@ app.post('/login', async (req, res) => {
         // const refreshToken = CreateRefreshToken(user._id);
         const accessToken = CreateAccessToken(user._id, user.role)
         const refreshToken = CreateRefreshToken(user._id, user.role)
-        
+
 
         // Save refresh token in DB
         user.refreshToken = refreshToken;
@@ -207,7 +209,7 @@ app.post("/upload", isAuth, upload.single("image"), async (req, res) => {
             description,
             location,
             imageUrl,
-            reportedBy: userID   // ✅ now it saves
+            reportedBy: userID
         });
 
         await newIssue.save();
@@ -310,7 +312,7 @@ app.put("/updateprofile", isAuth, async (req, res) => {
 
 app.get("/myissues", isAuth, async (req, res) => {
 
-    const userID = req.user.userID; 
+    const userID = req.user.userID;
 
     const issues = await Issue.find({ reportedBy: userID });
 
@@ -324,8 +326,8 @@ app.get("/mylimitedissues", isAuth, async (req, res) => {
         const userID = req.user.userID;
 
         const issues = await Issue.find({ reportedBy: userID })
-            .sort({ createdAt: -1 })  
-            .limit(2);                
+            .sort({ createdAt: -1 })
+            .limit(2);
 
         res.json(issues);
 
@@ -393,17 +395,17 @@ app.get("/admindashboardstats", isAuth, isAdmin, async (req, res) => {
 
 app.get("/adminallissues", isAuth, isAdmin, async (req, res) => {
     const issues = await Issue.find().populate("reportedBy", "firstname lastname email profileImage")
-    
-    
+
+
     res.json(issues);
 });
 
 
 app.get("/adminallissueslimit", isAuth, isAdmin, async (req, res) => {
     const issues = await Issue.find().populate("reportedBy", "firstname lastname email profileImage")
-    
-      .sort({ createdAt: -1 })  
-            .limit(3);        
+
+        .sort({ createdAt: -1 })
+        .limit(3);
     res.json(issues);
 });
 

@@ -9,7 +9,7 @@ const Signup = () => {
     const [firstname, setfirstname] = useState('')
     const [lastname, setlastname] = useState('')
 
-    const endpoint = 'http://localhost:5000/signup'
+    const endpoint = 'https://community-issue-report-system-1.onrender.com/signup'
     const submitDetails = () => {
 
 

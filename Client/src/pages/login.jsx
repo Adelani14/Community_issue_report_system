@@ -12,7 +12,7 @@ const Login = () => {
     const [email, setemail] = useState('')
     const [password, setpassword] = useState('')
 
-    const endpoint = 'http://localhost:5000/login'
+    const endpoint = 'https://community-issue-report-system-1.onrender.com/login'
 
     const submitDetails = async () => {
 

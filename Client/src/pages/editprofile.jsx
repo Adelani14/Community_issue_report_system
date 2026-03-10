@@ -16,7 +16,7 @@ function editprofile() {
             const token = localStorage.getItem("accessToken");
 
             const res = await axios.get(
-                "http://localhost:5000/myprofile",
+                "https://community-issue-report-system-1.onrender.com/myprofile",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -42,7 +42,7 @@ function editprofile() {
         const token = localStorage.getItem("accessToken");
 
         await axios.put(
-            "http://localhost:5000/updateprofile",
+            "https://community-issue-report-system-1.onrender.com/updateprofile",
             {
                 firstname,
                 lastname,
@@ -71,7 +71,7 @@ function editprofile() {
         const token = localStorage.getItem("accessToken")
 
         await axios.post(
-            "http://localhost:5000/uploadProfile",
+            "https://community-issue-report-system-1.onrender.com/uploadProfile",
             formData,
             {
                 headers: {

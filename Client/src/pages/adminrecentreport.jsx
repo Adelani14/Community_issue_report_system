@@ -19,7 +19,7 @@ const AdminRecentReport = () => {
 
             // Fetch recent reports
             const res = await axios.get(
-                "http://localhost:5000/adminallissues",
+                "https://community-issue-report-system-1.onrender.com/adminallissues",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -46,7 +46,7 @@ const AdminRecentReport = () => {
             const token = localStorage.getItem("accessToken")
 
             await axios.put(
-                `http://localhost:5000/updateStatus/${id}`,
+                `https://community-issue-report-system-1.onrender.com/updateStatus/${id}`,
                 { status: newStatus },
                 {
                     headers: {
@@ -77,7 +77,7 @@ const AdminRecentReport = () => {
             const token = localStorage.getItem("accessToken")
 
             await axios.delete(
-                `http://localhost:5000/deleteIssue/${id}`,
+                `https://community-issue-report-system-1.onrender.com/deleteIssue/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`

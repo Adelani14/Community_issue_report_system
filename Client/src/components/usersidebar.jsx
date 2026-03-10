@@ -10,7 +10,7 @@ const UserSidebar = () => {
             const token = localStorage.getItem("accessToken");
 
             await axios.post(
-                "http://localhost:5000/logout",
+                "https://community-issue-report-system-1.onrender.com/logout",
                 {},
                 {
                     headers: {

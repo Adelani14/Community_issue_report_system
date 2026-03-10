@@ -24,7 +24,7 @@ const UserDashboard = () => {
 
                 // GET USER PROFILE
                 const profileRes = await axios.get(
-                    "http://localhost:5000/myprofile",
+                    "https://community-issue-report-system-1.onrender.com/myprofile",
                     {
                         headers: {
                             Authorization: `Bearer ${token}`
@@ -38,7 +38,7 @@ const UserDashboard = () => {
 
                 // Fetch dashboard stats
                 const dashboardRes = await axios.get(
-                    "http://localhost:5000/dashboardstats",
+                    "https://community-issue-report-system-1.onrender.com/dashboardstats",
                     {
                         headers: {
                             Authorization: `Bearer ${token}`
@@ -51,7 +51,7 @@ const UserDashboard = () => {
 
                 // Fetch reports
                 const res = await axios.get(
-                    "http://localhost:5000/mylimitedissues",
+                    "https://community-issue-report-system-1.onrender.com/mylimitedissues",
                     {
                         headers: {
                             Authorization: `Bearer ${token}`

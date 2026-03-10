@@ -11,7 +11,7 @@ const recentreport = () => {
             try {
                 const token = localStorage.getItem("accessToken");
                 const res = await axios.get(
-                    "http://localhost:5000/myissues",
+                    "https://community-issue-report-system-1.onrender.com/myissues",
                     {
                         headers: {
                             Authorization: `Bearer ${token}`

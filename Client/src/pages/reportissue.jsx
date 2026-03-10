@@ -10,7 +10,7 @@ const reportissue = () => {
     const [priority, setPriority] = useState("");
     const [description, setDescription] = useState("");
     const [location, setLocation] = useState("");
-    const url = 'http://localhost:5000/upload'
+    const url = 'https://community-issue-report-system-1.onrender.com/upload'
 
 
 
