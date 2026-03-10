@@ -26,7 +26,7 @@ const admindashboard = () => {
 
     useEffect(() => {
 
-        const fetchReports = async () => {
+        const Reports = async () => {
 
             try {
 
@@ -47,7 +47,7 @@ const admindashboard = () => {
                 // fetch user profile
                 const profileRes = await axios.get(
                     "https://community-issue-report-system-1.onrender.com/adminprofile",
-                    
+
                     {
                         headers: {
                             Authorization: `Bearer ${token}`
@@ -70,17 +70,6 @@ const admindashboard = () => {
                 );
                 setDashboardStats(dashboardRes.data);
 
-                // Fetch recent reports
-                const res = await axios.get(
-                    "https://community-issue-report-system-1.onrender.com/adminallissueslimit",
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        },
-                        withCredentials: true
-                    }
-                );
-                setReports(res.data);
             } catch (error) {
                 console.error("Error fetching reports:", error);
             }
@@ -88,8 +77,36 @@ const admindashboard = () => {
 
         };
 
-        fetchReports()
+        Reports()
     }, []);
+
+    const fetchReports = async () => {
+
+        try {
+
+            const token = localStorage.getItem("accessToken");
+
+
+
+            // Fetch recent reports
+            const res = await axios.get(
+                "https://community-issue-report-system-1.onrender.com/adminallissues",
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                    withCredentials: true
+                }
+            );
+            setReports(res.data);
+        } catch (error) {
+            console.error("Error fetching reports:", error);
+        }
+
+
+    };
+
+    fetchReports()
 
     // Function to change issue status
     const changeStatus = async (id, newStatus) => {
@@ -272,7 +289,7 @@ const admindashboard = () => {
                                     <tr key={issue._id}>
                                         <td className="ps-4">
                                             <div className="d-flex align-items-center">
-                                                <img src={issue.reportedBy.profileImage}  className="avatar-img me-2" style={{ width: "40px", height: "40px", borderRadius: "50%" }} alt="User Avatar" />
+                                                <img src={issue.reportedBy.profileImage} className="avatar-img me-2" style={{ width: "40px", height: "40px", borderRadius: "50%" }} alt="User Avatar" />
                                                 <div><div className="fw-bold">{issue.reportedBy.firstname} {issue.reportedBy.lastname}</div><div className="text-muted" style={{ fontSize: "0.7rem" }}>{issue.reportedBy.email}</div></div>
                                             </div>
                                         </td>

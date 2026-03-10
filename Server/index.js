@@ -25,16 +25,19 @@ const uploadimg = require("./upload.js");
 
 // MIDDLEWARE
 
-app.use(cookieParser());
-
-// app.use("/uploads", express.static("uploads"))
-app.use("/uploads", express.static("uploads"))
 app.use(cors({
-    origin: ["http://localhost:5173",
-        "https://communityissuereportsystem.vercel.app"
+    origin: [
+        "https://communityissuereportsystem.vercel.app",
+        "http://localhost:5173"
+        
     ],
     credentials: true
 }));
+
+app.use(cookieParser());
+
+
+app.use("/uploads", express.static("uploads"))
 
 app.use(express.json());
 
@@ -87,8 +90,7 @@ app.post('/login', async (req, res) => {
         }
 
         //else if all matches
-        // const accessToken = CreateAccessToken(user._id);
-        // const refreshToken = CreateRefreshToken(user._id);
+       
         const accessToken = CreateAccessToken(user._id, user.role)
         const refreshToken = CreateRefreshToken(user._id, user.role)
 
