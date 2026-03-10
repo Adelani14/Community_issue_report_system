@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const nodemailer = require('nodemailer')
 const { uploadmedia } = require('./Cloud')
 // const cloudinary = require("./cloudinary.js");
-const cloudinary = require("./Cloudinary.js");
+const cloudinary = require("./cloudinary.js");
 const upload = require("./multer.js");
 const Issue = require("./models/issue");
 
