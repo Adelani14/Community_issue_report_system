@@ -201,12 +201,12 @@ const reportissue = () => {
                             </div>
                         </div>
 
-                        <div className="d-flex gap-3 mt-4">
-                            <button onClick={SubmitReport} id="submitbtn" type="button" className="btn btn-primary-fma btn-lg flex-grow-1 py-3">Submit Report</button>
-                            <button className="btn btn-outline-secondary btn-lg flex-grow-1 py-3"> <a href="/userdashboard">Cancel</a></button>
-
-                        </div>
                     </form>
+                    <div className="d-flex gap-3 mt-4">
+                        <button onClick={SubmitReport} id="submitbtn" type="button" className="btn btn-primary-fma btn-lg flex-grow-1 py-3">Submit Report</button>
+                        <button className="btn btn-outline-secondary btn-lg flex-grow-1 py-3"> <a href="/userdashboard">Cancel</a></button>
+
+                    </div>
                 </div>
             </div>
 
