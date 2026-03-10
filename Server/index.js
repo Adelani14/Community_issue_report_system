@@ -31,7 +31,7 @@ app.use(cookieParser());
 app.use("/uploads", express.static("uploads"))
 app.use(cors({
     origin: ["http://localhost:5173",
-        "https://communityissuereportsystem.vercel.app/"
+        "https://communityissuereportsystem.vercel.app"
     ],
     credentials: true
 }));
