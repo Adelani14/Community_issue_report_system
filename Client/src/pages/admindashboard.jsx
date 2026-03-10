@@ -90,7 +90,7 @@ const admindashboard = () => {
 
             // Fetch recent reports
             const res = await axios.get(
-                "https://community-issue-report-system-1.onrender.com/adminallissues",
+                "https://community-issue-report-system-1.onrender.com/adminallissueslimit",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`

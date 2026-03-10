@@ -98,6 +98,28 @@ const reportissue = () => {
                                     <option value="Waste Management">Waste Management</option>
                                     <option value="Roads & Infrastructure">Roads & Infrastructure</option>
                                     <option value="Public Safety">Public Safety</option>
+                                    <option value="Water Supply">Water Supply</option>
+                                    <option value="Electricity & Power">Electricity & Power</option>
+                                    <option value="Healthcare Services">Healthcare Services</option>
+                                    <option value="Education & Schools">Education & Schools</option>
+                                    <option value="Environmental Pollution">Environmental Pollution</option>
+                                    <option value="Traffic & Transportation">Traffic & Transportation</option>
+                                    <option value="Housing & Urban Planning">Housing & Urban Planning</option>
+                                    <option value="Public Parks & Recreation">Public Parks & Recreation</option>
+                                    <option value="Animal Control">Animal Control</option>
+                                    <option value="Community Events & Programs">Community Events & Programs</option>
+                                    <option value="Social Welfare Services">Social Welfare Services</option>
+                                    <option value="Crime & Law Enforcement">Crime & Law Enforcement</option>
+                                    <option value="Street Lighting">Street Lighting</option>
+                                    <option value="Noise Pollution">Noise Pollution</option>
+                                    <option value="Illegal Dumping">Illegal Dumping</option>
+                                    <option value="Traffic Signals & Signage">Traffic Signals & Signage</option>
+                                    <option value="Flood & Drainage Issues">Flood & Drainage Issues</option>
+                                    <option value="Public Transport">Public Transport</option>
+                                    <option value="Potholes & Road Maintenance">Potholes & Road Maintenance</option>
+                                    <option value="Sidewalks & Pedestrian Safety">Sidewalks & Pedestrian Safety</option>
+                                    <option value="Government Services Access">Government Services Access</option>
+                                    <option value="Community Health Programs">Community Health Programs</option>
                                 </select>
                             </div>
                             <div className="col-md-6">
