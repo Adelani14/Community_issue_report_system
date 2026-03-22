@@ -62,7 +62,7 @@ function editprofile() {
 
 
 
-    const uploadProfile = async () => {
+    const uploadProfileimage = async () => {
 
         const formData = new FormData()
 
@@ -129,7 +129,7 @@ function editprofile() {
                 <label htmlFor="updateprofileimage" className="mt-4 fs-3 fw-medium"> Upload Profile image  </label><br></br>
                 <input type="file" onChange={(e) => setImage(e.target.files[0])} />
 
-                <button onClick={uploadProfile}>
+                <button onClick={uploadProfileimage}>
                     Upload
                 </button>
             </div>
