@@ -18,8 +18,8 @@ const landingpage = () => {
                             <h1 className="display-4 fw-bold mb-4">Report Community <span className="text-success">Issues Effortlessly.</span></h1>
                             <p className="lead text-muted mb-5 pe-lg-5">Join thousands of citizens making their areas better. Report bad roads, waste, or maintenance needs in seconds and track resolutions in real-time.</p>
                             <div className="d-flex gap-3">
-                                <button className="btn btn-primary-fma px-4 py-3">Get Started Now &nbsp; <i className="bi bi-arrow-right"></i></button>
-                                <button className="btn btn-outline-fma px-4 py-3">Sign In</button>
+                                <button className="btn btn-primary-fma px-4 py-3"><a href='/signup' className="text-decoration-none nav-link  fw-semibold small text-dark">Get Started Now &nbsp; <i className="bi bi-arrow-right"></i></a></button>
+                                <button className="btn btn-outline-fma px-4 py-3"> <a href='/login' className="text-decoration-none nav-link  fw-semibold small text-dark"> Sign In</a></button>
                             </div>
                         </div>
                         <div className="col-lg-6 position-relative">

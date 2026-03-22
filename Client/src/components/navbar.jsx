@@ -18,7 +18,7 @@ function navbar() {
                         <div className="ms-auto">
                             <ul className="navbar-nav ms-auto me-3 gap-3 mt-2">
                                 <button className="btn btn-outline-success me-2 "><a href='/login' className="text-decoration-none nav-link  fw-semibold small text-dark">Login</a></button>
-                                <button className="btn btn-primary-fma btn-sm px-3">Report an Issue</button>
+                                <button className="btn btn-primary-fma btn-sm px-3"><a href='/login' className="text-decoration-none nav-link  fw-semibold small text-dark">Report an Issue</a></button>
                             </ul>
                         </div>
                     </div>

@@ -127,7 +127,7 @@ const UserDashboard = () => {
                         </div>
                     </div>
 
-                    <div className="#">
+                    <div className="admin-card overflow-hidden mb-4">
                         <div className="d-flex justify-content-between mb-3">
                             <h5 className="fw-bold">My Recent Reports</h5>
                             <a href="/recentreport" className="text-success text-decoration-none small">View All Reports &rarr;</a>
