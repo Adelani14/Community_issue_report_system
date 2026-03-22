@@ -319,11 +319,11 @@ const admindashboard = () => {
                         </table>
                     </div>
                     <div className="p-3 bg-light border-top d-flex justify-content-between align-items-center small">
-                        <span className="text-muted">Showing 5 of 1,284 issues</span>
+                        <span className="text-muted">Showing 3 of {dashboardStats.total} issues</span>
                         <nav>
                             <ul className="pagination pagination-sm mb-0">
                                 <li className="page-item disabled"><a className="page-link" href="#">Previous</a></li>
-                                <li className="page-item"><a className="page-link text-dark" href="#">Next</a></li>
+                                <li className="page-item"><a className="page-link text-dark" href="/adminrecentreport">Next</a></li>
                             </ul>
                         </nav>
                     </div>
