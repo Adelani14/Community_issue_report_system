@@ -29,7 +29,7 @@ app.use(cors({
     origin: [
         "https://communityissuereportsystem.vercel.app",
         "http://localhost:5173"
-        
+
     ],
     credentials: true
 }));
@@ -90,7 +90,7 @@ app.post('/login', async (req, res) => {
         }
 
         //else if all matches
-       
+
         const accessToken = CreateAccessToken(user._id, user.role)
         const refreshToken = CreateRefreshToken(user._id, user.role)
 
@@ -229,37 +229,82 @@ app.post("/upload", isAuth, upload.single("image"), async (req, res) => {
 
 
 // UPLOAD PROFILE PICTURE
+
+const streamifier = require("streamifier");
+
 app.post("/uploadProfile", isAuth, uploadimg.single("profileImage"), async (req, res) => {
-
     try {
-
         if (!req.file) {
-            return res.status(400).json({ message: "No file uploaded" })
+            return res.status(400).json({ message: "No file uploaded" });
         }
 
-        const userID = req.user.userID
+        const userID = req.user.userID;
 
-        // Upload image to Cloudinary
-        const result = await cloudinary.uploader.upload(req.file.path, {
-            folder: "profile_images"
-        })
+        // 🔥 upload using buffer (works on Render)
+        const uploadFromBuffer = (buffer) => {
+            return new Promise((resolve, reject) => {
+                const stream = cloudinary.uploader.upload_stream(
+                    { folder: "profile_images" },
+                    (error, result) => {
+                        if (error) reject(error);
+                        else resolve(result);
+                    }
+                );
+
+                streamifier.createReadStream(buffer).pipe(stream);
+            });
+        };
+
+        const result = await uploadFromBuffer(req.file.buffer);
 
         const updatedUser = await User.findByIdAndUpdate(
             userID,
             { profileImage: result.secure_url },
-            { returnDocument: "after" }
-        )
+            { new: true }
+        );
 
-        res.json(updatedUser)
+        res.json(updatedUser);
 
     } catch (err) {
-
-        console.log(err)
-        res.status(500).json({ message: "Upload failed" })
-
+        console.log(err);
+        res.status(500).json({ message: "Upload failed" });
     }
+});
 
-})
+// app.post("/uploadProfile", isAuth, uploadimg.single("profileImage"), async (req, res) => {
+
+//     try {
+
+//         if (!req.file) {
+//             return res.status(400).json({ message: "No file uploaded" })
+//         }
+
+//         const userID = req.user.userID
+
+//         // Upload image to Cloudinary
+//         const result = await cloudinary.uploader.upload(req.file.path, {
+//             folder: "profile_images"
+//         })
+
+
+
+//         const updatedUser = await User.findByIdAndUpdate(
+//             userID,
+//             { profileImage: result.secure_url },
+//             { returnDocument: "after" }
+//         )
+
+//         res.json(updatedUser)
+
+//     } catch (err) {
+
+//         console.log(err)
+//         res.status(500).json({ message: "Upload failed" })
+
+//     }
+
+// })
+
 
 // GET USER FIRSTNAME
 app.get("/firstname", isAuth, async (req, res) => {
@@ -464,14 +509,7 @@ app.get("/adminprofile", isAuth, isAdmin, async (req, res) => {
     res.json(user);
 });
 
-// USER ROUTE TO GET PROFILE INFO
-app.get("/myprofile", isAuth, async (req, res) => {
 
-    const user = await User.findById(req.user.id);
-
-    res.json(user);
-
-});
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

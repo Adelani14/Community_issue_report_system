@@ -71,6 +71,7 @@ function editprofile() {
         const token = localStorage.getItem("accessToken")
 
         await axios.post(
+            // "http://localhost:5000/uploadProfile",
             "https://community-issue-report-system-1.onrender.com/uploadProfile",
             formData,
             {
