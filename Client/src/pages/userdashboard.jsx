@@ -132,6 +132,8 @@ const UserDashboard = () => {
                             <h5 className="fw-bold">My Recent Reports</h5>
                             <a href="/recentreport" className="text-success text-decoration-none small">View All Reports &rarr;</a>
                         </div>
+                                            <div className="table-responsive">
+
                         <table className="table align-middle">
                             <thead className="table-light">
                                 <tr>
@@ -161,6 +163,7 @@ const UserDashboard = () => {
 
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
 
