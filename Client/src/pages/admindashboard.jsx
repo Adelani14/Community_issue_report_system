@@ -311,7 +311,11 @@ const admindashboard = () => {
                                                 <option value="Resolved">Resolved</option>
 
                                             </select>
+                                        </td>
+
+                                        <td>
                                             <button className="btn btn-sm"><i className="bi bi-trash" onClick={() => deleteIssue(issue._id)}></i></button>
+
                                         </td>
                                     </tr>
                                 ))}
