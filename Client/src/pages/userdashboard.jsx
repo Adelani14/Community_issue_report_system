@@ -90,7 +90,7 @@ const UserDashboard = () => {
                             </div>
                             <p className="text-muted">Welcome back, {userFirstname}. Here's what's happening.</p>
                         </div>
-                        <div className="align-items-center">
+                        {/* <div className="align-items-center">
                             <button className="btn btn-success"><i className="bi bi-plus-circle me-2"></i><a href="/reportissue" className="text-white text-decoration-none">New Report</a></button>
                             <img
                                 src={user.profileImage ? user.profileImage : "/p1.jpg"}
@@ -98,7 +98,7 @@ const UserDashboard = () => {
                                 style={{ width: "50px", height: "50px", borderRadius: "50%" }}
                                 alt="Profile"
                             />
-                        </div>
+                        </div> */}
                     </header>
 
                     <div className="row g-4 mb-4">
