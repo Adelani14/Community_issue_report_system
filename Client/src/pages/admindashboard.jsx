@@ -182,7 +182,7 @@ const admindashboard = () => {
                         </div>
                         <p className="text-muted small">Global overview of community reports and infrastructure status.</p>
                     </div>
-                    <div className="d-flex align-items-center gap-3">
+                    {/* <div className="d-flex align-items-center gap-3">
                         <div className=" align-items-center fw-bold text-success fs-4">
                             <img
                                 src={user && user.profileImage ? user.profileImage : "p1.jpg"}
@@ -192,7 +192,7 @@ const admindashboard = () => {
                                 width="50"
                             />
                         </div>
-                    </div>
+                    </div> */}
                 </header>
 
                 <div className="row g-4 mb-4">
