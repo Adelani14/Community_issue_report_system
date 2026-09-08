@@ -206,9 +206,9 @@ const UserDashboard = () => {
                             >
 
                                 {/* Header */}
-                                <div className="flex items-center justify-between py-4 modal-content bg-dark border-0">
+                                <div className="d-flex items-center justify-between py-2 modal-content bg-dark border-0">
 
-                                    <div className="modal-header">
+                                    <div className="">
                                         <h3 className="text-white text-xl font-semibold">
                                             {selectedIssue.title}
                                         </h3>
