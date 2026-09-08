@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import axios from "axios";
 // import axios from "utils/axiosInstance";
 import axios from "../utils/axiosInstance";
@@ -10,12 +10,19 @@ const reportissue = () => {
     const [priority, setPriority] = useState("");
     const [description, setDescription] = useState("");
     const [location, setLocation] = useState("");
+    const [loading, setLoading] = useState(false);
     const url = 'https://community-issue-report-system-1.onrender.com/upload'
 
 
 
     const SubmitReport = () => {
 
+        if (!title || !issuetype || !description || !location) {
+            alert("Please fill in all required fields.");
+            return;
+        }
+
+        setLoading(true);
 
         const formData = new FormData();
 
@@ -49,6 +56,9 @@ const reportissue = () => {
             })
             .catch((err) => {
                 console.log(err);
+            })
+            .finally(() => {
+                setLoading(false);
             });
 
 
@@ -66,6 +76,37 @@ const reportissue = () => {
 
     return (
         <>
+            {loading && (
+                <div
+                    className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+                    style={{
+                        backgroundColor: "rgba(0, 0, 0, 0.25)",
+                        backdropFilter: "blur(6px)",
+                        WebkitBackdropFilter: "blur(6px)",
+                        zIndex: 9999,
+                    }}
+                >
+                    <div className="position-relative d-inline-flex justify-content-center align-items-center">
+                        <i
+                            className="spinner-border text-success"
+                            style={{ fontSize: "2.5rem" }}
+                        ></i>
+
+                        <div
+                            className="spinner-border spinner-border-sm text-light position-absolute"
+                            style={{
+                                width: "1.3rem",
+                                height: "1.3rem",
+                            }}
+                        ></div>
+                    </div>
+                </div>
+            )}
+
+
+
+
+
 
             <div className="container p-3" style={{ maxWidth: '900px' }}>
                 <div className="mb-4 ">

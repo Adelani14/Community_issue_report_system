@@ -1,8 +1,7 @@
 import React from "react";
-import img1 from '../assets/images/community.jpg'
-import img2 from '../assets/images/workingwithlaptop.jpg'
 import Footer from "../components/footer";
 import Navbar from "../components/navbar";
+import { Link } from "react-router-dom";
 // import './App.css';
 const landingpage = () => {
     return (
@@ -24,7 +23,7 @@ const landingpage = () => {
                         </div>
                         <div className="col-lg-6 position-relative">
                             <div className="rounded-4 overflow-hidden shadow-lg border">
-                                <img src={img1} style={{ height: '450px', width: '100%' }} className="img-fluid" alt="User reporting issue" />
+                                <img src="https://res.cloudinary.com/dn7lrgxvl/image/upload/v1788536176/community_kvkvnx.jpg" style={{ height: '450px', width: '100%' }} className="img-fluid" alt="User reporting issue" />
                             </div>
                             <div className="card position-absolute bottom-0 start-0 m-4 p-3 shadow border-0 d-flex flex-row align-items-center" style={{ width: '320px' }}>
                                 <div className="bg-light p-2 rounded-circle me-3"><i className="bi bi-check-circle text-success"></i></div>
@@ -147,12 +146,12 @@ const landingpage = () => {
                             <h2 className="display-5 fw-bold mb-3">Ready to improve your community?</h2>
                             <p className="mb-4 fs-5 opacity-75">Join FixMyArea today and start reporting. Together, we can build a cleaner, safer, and more beautiful neighborhood.</p>
                             <div className="d-flex gap-3">
-                                <button className="btn btn-light text-success fw-bold px-4 py-3 rounded-pill">Get Started Free</button>
-                                <button className="btn btn-outline-light px-4 py-3 rounded-pill fw-bold">Partner with Us</button>
+                                <Link to="/signup" className="btn btn-light text-success fw-bold px-4 py-3 rounded-pill">Get Started Free</Link>
+                                <Link to="/signup" className="btn btn-outline-light px-4 py-3 rounded-pill fw-bold">Partner with Us</Link>
                             </div>
                         </div>
                         <div className="col-lg-5 d-none d-lg-block">
-                            <img src={img2} className="img-fluid rounded-3 shadow" style={{ transform: 'rotate(2deg)' }} />
+                            <img src='https://res.cloudinary.com/dn7lrgxvl/image/upload/v1788536292/workingwithlaptop_dravig.jpg' className="img-fluid rounded-3 shadow" style={{ transform: 'rotate(2deg)' }} />
                         </div>
                     </div>
                 </div>
