@@ -13,7 +13,8 @@ const UserDashboard = () => {
     const [user, setUser] = useState({});
     const [reports, setReports] = useState([]);
     const [userFirstname, setUserFirstname] = useState("");
-
+    const [showGallery, setShowGallery] = useState(false);
+    const [selectedIssue, setSelectedIssue] = useState(null);
     useEffect(() => {
 
         const fetchReports = async () => {
@@ -75,6 +76,17 @@ const UserDashboard = () => {
 
 
 
+    const openGallery = (issue) => {
+        setSelectedIssue(issue);
+        setShowGallery(true);
+    };
+
+    const closeGallery = () => {
+        setShowGallery(false);
+        setSelectedIssue(null);
+    };
+
+
 
     return (
 
@@ -92,7 +104,7 @@ const UserDashboard = () => {
                         </div>
                         <div className="align-items-center d-none d-md-flex">
                             <button className="btn btn-success"><i className="bi bi-plus-circle me-2"></i><a href="/reportissue" className="text-white text-decoration-none">New Report</a></button>
-                           
+
                         </div>
                         {/* <div className="align-items-center">
                             <button className="btn btn-success"><i className="bi bi-plus-circle me-2"></i><a href="/reportissue" className="text-white text-decoration-none">New Report</a></button>
@@ -131,45 +143,103 @@ const UserDashboard = () => {
                     <div className="admin-card overflow-hidden mb-4">
                         <div className="d-flex justify-content-between mb-3">
                             <h5 className="fw-bold">Recent Reports</h5>
-                            <Link  to="/recentreport" className="text-success text-decoration-none small">View All Reports &rarr;</Link>
+                            <Link to="/recentreport" className="text-success text-decoration-none small">View All Reports &rarr;</Link>
                         </div>
-                                            <div className="table-responsive">
+                        <div className="table-responsive">
 
-                        <table className="table align-middle">
-                            <thead className="table-light">
-                                <tr>
-                                    <th>Issue Details</th>
-                                    <th>Status</th>
-                                    <th>Date Submitted</th>
-                                    <th>Image</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {reports.map((issue) => (
-
-                                    <tr key={issue._id}>
-
-                                        <td>
-                                            <div className="fw-bold">{issue.title}</div>
-                                            <small className="text-muted"><i className="bi bi-geo-alt"></i> {issue.location}</small>
-                                        </td>
-                                        <td><span className="status-badge bg-success-subtle text-success">{issue.status}</span></td>
-                                        <td>{new Date(issue.createdAt).toDateString()}</td>
-                                        <td><button className="btn btn-sm"><i className="bi bi-image"></i><a href={`${issue.imageUrl}`} target="_blank" rel="noopener noreferrer" className="text-decoration-none text-dark ms-1">View</a></button></td>
-                                        <td><button className="btn btn-sm"><i className="bi bi-eye"></i></button></td>
+                            <table className="table align-middle">
+                                <thead className="table-light">
+                                    <tr>
+                                        <th>Issue Details</th>
+                                        <th>Status</th>
+                                        <th>Date Submitted</th>
+                                        <th>Image</th>
+                                        <th>Action</th>
                                     </tr>
+                                </thead>
+                                <tbody>
+                                    {reports.map((issue) => (
 
-                                ))}
+                                        <tr key={issue._id}>
 
-                            </tbody>
-                        </table>
+                                            <td>
+                                                <div className="fw-bold">{issue.title}</div>
+                                                <small className="text-muted"><i className="bi bi-geo-alt"></i> {issue.location}</small>
+                                            </td>
+                                            <td><span className="status-badge bg-success-subtle text-success">{issue.status}</span></td>
+                                            <td>{new Date(issue.createdAt).toDateString()}</td>
+                                            <td>
+                                                <button
+                                                    className="btn btn-sm"
+                                                    onClick={() => openGallery(issue)}
+                                                >
+                                                    <i className="bi bi-image"></i>
+                                                    <span className="ms-1">View</span>
+                                                </button>
+                                            </td>                                            <td><button className="btn btn-sm"><i className="bi bi-eye"></i></button></td>
+                                        </tr>
+
+                                    ))}
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
 
 
             </div>
+
+            {
+                showGallery && selectedIssue && (
+                    <div
+                        className="fixed inset-0 bg-black/95 z-[99999] flex items-center justify-center p-4"
+                        onClick={closeGallery}
+                    >
+
+                        <div
+                            className="w-full max-w-6xl h-full flex flex-col"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+
+                            {/* Header */}
+                            <div className="flex items-center justify-between py-4">
+
+                                <div>
+                                    <h3 className="text-white text-xl font-semibold">
+                                        {selectedIssue.title}
+                                    </h3>
+
+                                    <p className="text-white/60 text-sm">
+                                        {selectedIssue.location}
+                                    </p>
+                                </div>
+
+                                <button
+                                    onClick={closeGallery}
+                                    className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition"
+                                >
+                                    ✕
+                                </button>
+
+                            </div>
+
+                            <div className="flex-1 flex items-center justify-center relative">
+
+                                <img
+                                    src={selectedIssue.imageUrl}
+                                    alt={selectedIssue.title}
+                                    className="max-h-[70vh] max-w-full object-contain rounded-xl"
+                                />
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                )
+            }
+
         </>
 
 
