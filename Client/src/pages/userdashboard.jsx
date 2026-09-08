@@ -206,7 +206,7 @@ const UserDashboard = () => {
                             >
 
                                 {/* Header */}
-                                <div className="d-flex items-center justify-between py-2 modal-content bg-dark border-0">
+                                <div className="d-flex items-center justify-between py-2 ">
 
                                     <div className="">
                                         <h3 className="text-white text-xl font-semibold">
