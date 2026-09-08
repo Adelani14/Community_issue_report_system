@@ -206,15 +206,15 @@ const UserDashboard = () => {
                             >
 
                                 {/* Header */}
-                                <div className="d-flex items-center justify-between py-2 ">
+                                <div className="d-flex justify-between py-2 ">
 
                                     <div className="">
                                         <h3 className="text-white text-xl font-semibold">
-                                            {selectedIssue.title}
+                                            Issue: {selectedIssue.title}
                                         </h3>
 
-                                        <p className="text-white/60 text-sm">
-                                            {selectedIssue.location}
+                                        <p className="text-white text-md">
+                                           Location: {selectedIssue.location}
                                         </p>
                                     </div>
 
