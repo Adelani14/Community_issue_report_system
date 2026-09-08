@@ -192,19 +192,23 @@ const UserDashboard = () => {
                 {
                     showGallery && selectedIssue && (
                         <div
-                            className="fixed inset-0 bg-black/95 z-[99999] flex items-center justify-center p-4"
+                            className="modal fade show d-block"
+                            style={{
+                                background: "rgba(0,0,0,.9)",
+                                zIndex: 99999,
+                            }}
                             onClick={closeGallery}
                         >
 
                             <div
-                                className="w-full max-w-6xl h-full flex flex-col"
+                                className="modal-dialog modal-fullscreen"
                                 onClick={(e) => e.stopPropagation()}
                             >
 
                                 {/* Header */}
-                                <div className="flex items-center justify-between py-4">
+                                <div className="flex items-center justify-between py-4 modal-content bg-dark border-0">
 
-                                    <div>
+                                    <div className="modal-header">
                                         <h3 className="text-white text-xl font-semibold">
                                             {selectedIssue.title}
                                         </h3>
@@ -223,14 +227,17 @@ const UserDashboard = () => {
 
                                 </div>
 
-                                <div className="flex-1 flex items-center justify-center relative">
+                                <div className=" modal-body flex-1 flex items-center justify-center relative">
 
                                     <img
                                         src={selectedIssue.imageUrl}
                                         alt={selectedIssue.title}
-                                        className="max-h-[70vh] max-w-full object-contain rounded-xl"
+                                        className="img-fluid"
 
-                                       
+                                        style={{
+                                            maxHeight: "70vh",
+                                            objectFit: "contain",
+                                        }}
                                     />
 
                                 </div>
