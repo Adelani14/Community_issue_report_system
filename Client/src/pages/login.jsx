@@ -11,6 +11,9 @@ import axios from "../utils/axiosInstance";
 const Login = () => {
     const [email, setemail] = useState('')
     const [password, setpassword] = useState('')
+    const [notfilled, setnotfilled] = useState(false)
+    const [notmatch, setNotmatch] = useState(false)
+    const [notvalid, setNotvalid] = useState(false)
 
     const endpoint = 'https://community-issue-report-system-1.onrender.com/login'
 
@@ -24,9 +27,9 @@ const Login = () => {
 
 
         if (theemail === "" || thepassword === "") {
-            errorMessage3.style.display = 'block';
+            setnotfilled(true)
             setTimeout(() => {
-                errorMessage3.style.display = 'none';
+                setnotfilled(false)
             }, 2000);
             return;
         } else {
@@ -36,9 +39,9 @@ const Login = () => {
             let emailValid = emailChecked.test(theemail);
 
             if (!emailValid) {
-                erroremail.style.display = 'block';
+                setNotvalid(true)
                 setTimeout(() => {
-                    erroremail.style.display = 'none';
+                    setNotvalid(false)
                 }, 2000);
                 return;
             }
@@ -76,9 +79,9 @@ const Login = () => {
                 catch (err) {
 
                     if (err.response && err.response.status >= 400) {
-                        errorMessage.style.display = 'block';
+                        setNotmatch(true)
                         setTimeout(() => {
-                            errorMessage.style.display = 'none';
+                            setNotmatch(false)
                         }, 2000);
                     }
                 }
@@ -102,9 +105,7 @@ const Login = () => {
                     </div>
 
                     <form>
-                        <small className=" text-danger " id="errorMessage3" style={{ display: "none" }}>
-                            Fill up all the inputs!
-                        </small>
+                        
                         <div className="mb-3">
                             <label className="form-label fw-bold small">Email Address</label>
                             <div className="input-group">
@@ -112,9 +113,12 @@ const Login = () => {
                                 <input onChange={(e) => { setemail(e.target.value) }} type="email" id='eemail' className="form-control bg-light border-start-0" placeholder="name@example.com" value={email} />
 
                             </div>
-                            <small className="ms-3 text-danger " id="erroremail" style={{ display: "none" }}>
-                                enter a valid email address!
-                            </small>
+                            {notvalid && (
+
+                                <small className="ms-3 d-flex text-danger ">
+                                    <i className="bi bi-info-circle me-1 fs-8 text-danger"></i> enter a valid email address
+                                </small>
+                            )}
                         </div>
 
                         <div className="mb-3">
@@ -127,15 +131,27 @@ const Login = () => {
                                 <input onChange={(e) => { setpassword(e.target.value) }} type="password" id='ppassword' className="form-control bg-light border-start-0" placeholder="Enter your password" value={password} />
 
                             </div>
-                            <small className="ms-3 text-danger " id="errorMessage" style={{ display: "none" }}>
-                                incorrect Password or email!
-                            </small>
+                            {notmatch && (
+                                <small className="ms-3 text-danger d-flex">
+                                    <i className="bi bi-info-circle me-1 fs-8 text-danger"></i>
+                                    incorrect Password or email!
+                                </small>
+                            )}
                         </div>
 
                         <div className="alert alert-info bg-success-subtle border-0 small d-flex align-items-start py-2">
                             <i className="bi bi-info-circle me-2 mt-1"></i>
                             <span><strong>Admin Login:</strong> Use any valid format. This system is designed for both Citizens and Authorities.</span>
                         </div>
+
+                        {notfilled && (
+                            <div className="alert alert-info border-0 bg-danger-subtle d-flex align-items-center" role="alert">
+                                <i className="bi bi-info-circle me-3 fs-4 text-danger"></i>
+                                <div className="small text-dark">
+                                    Please fill in all the requred fields.
+                                </div>
+                            </div>
+                        )}
 
                         <button onClick={submitDetails} id='loginbtn' type="button" className="btn btn-primary-fma w-100 py-3 mb-3 fw-bold">Sign In &rarr;</button>
 

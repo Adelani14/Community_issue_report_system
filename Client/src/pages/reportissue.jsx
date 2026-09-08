@@ -11,6 +11,7 @@ const reportissue = () => {
     const [description, setDescription] = useState("");
     const [location, setLocation] = useState("");
     const [loading, setLoading] = useState(false);
+    const [notfilled, setNotfilled] = useState(false);
     const url = 'https://community-issue-report-system-1.onrender.com/upload'
 
 
@@ -18,7 +19,10 @@ const reportissue = () => {
     const SubmitReport = () => {
 
         if (!title || !issuetype || !description || !location) {
-            alert("Please fill in all required fields.");
+            setNotfilled(true)
+            setTimeout(() => {
+                setNotfilled(false)
+            }, 3000)
             return;
         }
 
@@ -228,7 +232,8 @@ const reportissue = () => {
                             <label htmlFor="mediafile" className="form-label fw-bold small">Upload Evidence</label>
                             <div className="border border-2 border-dashed rounded-3 p-5 text-center bg-light">
                                 <i className="bi bi-cloud-arrow-up display-5 text-muted"></i><br></br>
-                                <input type="file" id="mediafile" className="w-25 " onChange={(e) => { setmediafile(e.target.files) }} />
+                                <input
+                                 type="file" id="mediafile" className="w-25 " onChange={(e) => { setmediafile(e.target.files) }} />
 
                                 <p className="mb-0 mt-2 fw-bold">Click or drag photo to upload</p>
                                 <small className="text-muted">PNG, JPG or GIF max of 10MB</small>
@@ -242,6 +247,14 @@ const reportissue = () => {
                             </div>
                         </div>
 
+                        {notfilled && (
+                            <div className="alert alert-info border-0 bg-danger-subtle d-flex align-items-center" role="alert">
+                                <i className="bi bi-info-circle me-3 fs-4 text-danger"></i>
+                                <div className="small text-dark">
+                                    Please fill in all the requred fields.
+                                </div>
+                            </div>
+                        )}
                     </form>
                     <div className="d-flex gap-3 mt-4">
                         <button onClick={SubmitReport} id="submitbtn" type="button" className="btn btn-primary-fma btn-lg flex-grow-1 py-3">Submit Report</button>

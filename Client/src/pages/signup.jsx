@@ -8,6 +8,12 @@ const Signup = () => {
     const [password, setpassword] = useState('')
     const [firstname, setfirstname] = useState('')
     const [lastname, setlastname] = useState('')
+    const [notfilled, setNotfilled] = useState(false)
+    const [notmatch, setNotmatch] = useState(false)
+    const [notvalid, setNotvalid] = useState(false)
+    const [strongpass, setStrongpass] = useState(false)
+    const [firstnameinvalid, setFirstnameinvalid] = useState(false)
+    const [lastnameinvalid, setLastnameinvalid] = useState(false)
 
     const endpoint = 'https://community-issue-report-system-1.onrender.com/signup'
     const submitDetails = () => {
@@ -19,12 +25,12 @@ const Signup = () => {
         const theemail = document.getElementById("eemail").value;
         const thepassword = document.getElementById("ppassword").value;
         const Cpassword = document.getElementById("Cpass").value;
-        
+
 
         if (thefirstname === "" || thelastname === "" || theemail === "" || thepassword === "" || Cpassword === "") {
-            errorMessage3.style.display = 'block';
+            setNotfilled(true)
             setTimeout(() => {
-                errorMessage3.style.display = 'none';
+                setNotfilled(false)
             }, 2000);
             return;
         } else {
@@ -36,26 +42,26 @@ const Signup = () => {
             let emailValid = emailChecked.test(theemail);
 
             if (!emailValid) {
-                erroremail.style.display = 'block';
+                setNotvalid(true)
                 setTimeout(() => {
-                    erroremail.style.display = 'none';
+                    setNotvalid(false)
                 }, 2000);
                 return;
             }
             let FirstNameValid = nameChecked.test(thefirstname);
             let LastNameValid = nameChecked.test(thelastname);
             if (!FirstNameValid) {
-                firstnameerror.style.display = 'block';
+                setFirstnameinvalid(true)
                 setTimeout(() => {
-                    firstnameerror.style.display = 'none';
+                    setFirstnameinvalid(false)
                 }, 2000);
                 return;
 
             }
             if (!LastNameValid) {
-                lastnameerror.style.display = 'block';
+                setLastnameinvalid(true)
                 setTimeout(() => {
-                    lastnameerror.style.display = 'none';
+                    setLastnameinvalid(false)
                 }, 2000);
                 return;
 
@@ -64,18 +70,18 @@ const Signup = () => {
 
             let PassValid = PassChecked.test(thepassword);
             if (!PassValid) {
-                errorMessage2.style.display = 'block';
+                setStrongpass(true)
                 setTimeout(() => {
-                    errorMessage2.style.display = 'none';
+                    setStrongpass(false)
                 }, 2000);
                 return;
             } else {
 
                 if (thepassword !== Cpassword) {
 
-                    errorMessage.style.display = 'block';
+                    setNotmatch(true)
                     setTimeout(() => {
-                        errorMessage.style.display = 'none';
+                        setNotmatch(false)
                     }, 2000);
                 } else {
                     errorMessage.style.display = 'none';
@@ -124,18 +130,19 @@ const Signup = () => {
                     </div>
 
                     <form>
-                        <small className=" text-danger " id="errorMessage3" style={{ display: "none" }}>
-                            Fill up all the inputs!
-                        </small>
+
                         <div className="mb-3">
                             <label className="form-label fw-bold small">First Name</label>
                             <div className="input-group">
                                 <span className="input-group-text bg-light border-end-0"><i className="bi bi-person"></i></span>
                                 <input onChange={(e) => { setfirstname(e.target.value) }} type="text" id="ffirstname" className="form-control bg-light border-start-0" placeholder="Enter your first name" value={firstname} />
                             </div>
-                            <small className="ms-3 text-danger " id="firstnameerror" style={{ display: "none" }}>
-                                invalid first name entered!
-                            </small>
+                            {firstnameinvalid && (
+
+                                <small className="ms-3 d-flex text-danger ">
+                                    <i className="bi bi-info-circle me-1 fs-8 text-danger"></i>invalid first name entered
+                                </small>
+                            )}
                         </div>
                         <div className="mb-3">
                             <label className="form-label fw-bold small">Last Name</label>
@@ -143,9 +150,12 @@ const Signup = () => {
                                 <span className="input-group-text bg-light border-end-0"><i className="bi bi-person"></i></span>
                                 <input onChange={(e) => { setlastname(e.target.value) }} type="text" id="llastname" className="form-control bg-light border-start-0" placeholder="Enter your last name" value={lastname} />
                             </div>
-                            <small className="ms-3 text-danger " id="lastnameerror" style={{ display: "none" }}>
-                                invalid last name entered!
-                            </small>
+                            {lastnameinvalid && (
+
+                                <small className="ms-3 d-flex text-danger ">
+                                    <i className="bi bi-info-circle me-1 fs-8 text-danger"></i>invalid last name entered
+                                </small>
+                            )}
                         </div>
 
                         <div className="mb-3">
@@ -155,9 +165,12 @@ const Signup = () => {
                                 <input onChange={(e) => { setemail(e.target.value) }} type="email" id="eemail" className="form-control bg-light border-start-0" placeholder="name@example.com" value={email} />
 
                             </div>
-                            <small className="ms-3 text-danger " id="erroremail" style={{ display: "none" }}>
-                                enter a valid email address!
-                            </small>
+                            {notvalid && (
+
+                                <small className="ms-3 d-flex text-danger ">
+                                    <i className="bi bi-info-circle me-1 fs-8 text-danger"></i> enter a valid email address
+                                </small>
+                            )}
                         </div>
 
                         <div className="mb-3">
@@ -179,16 +192,29 @@ const Signup = () => {
                                 <span className="input-group-text bg-light border-end-0"><i className="bi bi-lock"></i></span>
                                 <input type="password" id="Cpass" className="form-control bg-light border-start-0" placeholder="Confirm your password" />
                             </div>
-                            <small className="ms-3 text-danger " id="errorMessage" style={{ display: "none" }}>
-                                Passwords do not match!
-                            </small>
-                            <small className="ms-3 text-danger " id="errorMessage2" style={{ display: "none" }}>
-                                enter a strong password!
-                            </small>
+                            {notmatch && (
+                                <small className="ms-3 text-danger d-flex">
+                                    <i className="bi bi-info-circle me-1 fs-8 text-danger"></i>
+                                    password do not match
+                                </small>
+                            )}
+                            {strongpass && (
+                                <small className="ms-3 text-danger d-flex">
+                                    <i className="bi bi-info-circle me-1 fs-8 text-danger"></i>
+                                    enter a strong Password
+                                </small>
+                            )}
                         </div>
 
 
-
+                        {notfilled && (
+                            <div className="alert alert-info border-0 bg-danger-subtle d-flex align-items-center" role="alert">
+                                <i className="bi bi-info-circle me-3 fs-4 text-danger"></i>
+                                <div className="small text-dark">
+                                    Please fill in all the requred fields.
+                                </div>
+                            </div>
+                        )}
                         <button onClick={submitDetails} type="button" className="btn btn-primary-fma w-100 py-3 mb-3 fw-bold" id="signupbtn">Sign up &rarr;</button>
 
                         <div className="text-center">

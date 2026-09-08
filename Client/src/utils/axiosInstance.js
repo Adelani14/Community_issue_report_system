@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:5000",
+    baseURL: "https://community-issue-report-system-1.onrender.com",
     withCredentials: true
 });
 
@@ -25,7 +25,7 @@ axiosInstance.interceptors.response.use(
             try {
 
                 const res = await axios.post(
-                    "http://localhost:5000/refresh_token",
+                    ("/refresh_token"),
                     {},
                     { withCredentials: true }
                 );

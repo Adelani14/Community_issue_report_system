@@ -2,9 +2,9 @@ import React from "react";
 import UserSidebar from "../components/usersidebar";
 import { useEffect, useState } from "react";
 import axios from "../utils/axiosInstance";
+import { Link } from "react-router-dom";
 
 const UserDashboard = () => {
-    //dashboardstats
     const [dashboardStats, setDashboardStats] = useState({
         total: 0,
         pending: 0,
@@ -90,6 +90,10 @@ const UserDashboard = () => {
                             </div>
                             <p className="text-muted">Welcome back, {userFirstname}. Here's what's happening.</p>
                         </div>
+                        <div className="align-items-center d-none d-md-flex">
+                            <button className="btn btn-success"><i className="bi bi-plus-circle me-2"></i><a href="/reportissue" className="text-white text-decoration-none">New Report</a></button>
+                           
+                        </div>
                         {/* <div className="align-items-center">
                             <button className="btn btn-success"><i className="bi bi-plus-circle me-2"></i><a href="/reportissue" className="text-white text-decoration-none">New Report</a></button>
                             <img
@@ -108,29 +112,26 @@ const UserDashboard = () => {
                             <div className="card stat-card" style={{ borderLeft: "5px solid #3b82f6" }}>
                                 <small className="text-muted">Total Reports</small>
                                 <h2 className="fw-bold">{dashboardStats.total}</h2>
-                                <span className="text-primary small">+2 from last week</span>
                             </div>
                         </div>
                         <div className="col-md-4">
                             <div className="card stat-card" style={{ borderLeft: "5px solid #f59e0b" }}>
                                 <small className="text-muted">Pending Issues</small>
                                 <h2 className="fw-bold">{dashboardStats.pending}</h2>
-                                <span className="text-warning small">3 marked as urgent</span>
                             </div>
                         </div>
                         <div className="col-md-4">
                             <div className="card stat-card" style={{ borderLeft: "5px solid #10b981" }}>
                                 <small className="text-muted">Resolved</small>
                                 <h2 className="fw-bold">{dashboardStats.resolved}</h2>
-                                <span className="text-success small">82% resolution rate</span>
                             </div>
                         </div>
                     </div>
 
                     <div className="admin-card overflow-hidden mb-4">
                         <div className="d-flex justify-content-between mb-3">
-                            <h5 className="fw-bold">My Recent Reports</h5>
-                            <a href="/recentreport" className="text-success text-decoration-none small">View All Reports &rarr;</a>
+                            <h5 className="fw-bold">Recent Reports</h5>
+                            <Link  to="/recentreport" className="text-success text-decoration-none small">View All Reports &rarr;</Link>
                         </div>
                                             <div className="table-responsive">
 
