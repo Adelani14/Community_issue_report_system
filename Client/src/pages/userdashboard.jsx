@@ -188,57 +188,62 @@ const UserDashboard = () => {
                 </div>
 
 
-            </div>
 
-            {
-                showGallery && selectedIssue && (
-                    <div
-                        className="fixed inset-0 bg-black/95 z-[99999] flex items-center justify-center p-4"
-                        onClick={closeGallery}
-                    >
-
+                {
+                    showGallery && selectedIssue && (
                         <div
-                            className="w-full max-w-6xl h-full flex flex-col"
-                            onClick={(e) => e.stopPropagation()}
+                            className="fixed inset-0 bg-black/95 z-[99999] flex items-center justify-center p-4"
+                            onClick={closeGallery}
                         >
 
-                            {/* Header */}
-                            <div className="flex items-center justify-between py-4">
+                            <div
+                                className="w-full max-w-6xl h-full flex flex-col"
+                                onClick={(e) => e.stopPropagation()}
+                            >
 
-                                <div>
-                                    <h3 className="text-white text-xl font-semibold">
-                                        {selectedIssue.title}
-                                    </h3>
+                                {/* Header */}
+                                <div className="flex items-center justify-between py-4">
 
-                                    <p className="text-white/60 text-sm">
-                                        {selectedIssue.location}
-                                    </p>
+                                    <div>
+                                        <h3 className="text-white text-xl font-semibold">
+                                            {selectedIssue.title}
+                                        </h3>
+
+                                        <p className="text-white/60 text-sm">
+                                            {selectedIssue.location}
+                                        </p>
+                                    </div>
+
+                                    <button
+                                        onClick={closeGallery}
+                                        className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition"
+                                    >
+                                        ✕
+                                    </button>
+
                                 </div>
 
-                                <button
-                                    onClick={closeGallery}
-                                    className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition"
-                                >
-                                    ✕
-                                </button>
+                                <div className="flex-1 flex items-center justify-center relative">
 
-                            </div>
+                                    <img
+                                        src={selectedIssue.imageUrl}
+                                        alt={selectedIssue.title}
+                                        className="max-h-[70vh] max-w-full object-contain rounded-xl"
 
-                            <div className="flex-1 flex items-center justify-center relative">
+                                       
+                                    />
 
-                                <img
-                                    src={selectedIssue.imageUrl}
-                                    alt={selectedIssue.title}
-                                    className="max-h-[70vh] max-w-full object-contain rounded-xl"
-                                />
+                                </div>
 
                             </div>
 
                         </div>
+                    )
+                };
 
-                    </div>
-                )
-            }
+            </div>
+
+
 
         </>
 
