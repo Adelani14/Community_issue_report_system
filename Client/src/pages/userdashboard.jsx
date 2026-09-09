@@ -15,9 +15,11 @@ const UserDashboard = () => {
     const [userFirstname, setUserFirstname] = useState("");
     const [showGallery, setShowGallery] = useState(false);
     const [selectedIssue, setSelectedIssue] = useState(null);
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
 
         const fetchReports = async () => {
+            setLoading(true);
 
             try {
 
@@ -65,6 +67,8 @@ const UserDashboard = () => {
 
             } catch (error) {
                 console.log(error);
+            } finally {
+                setLoading(false);
             }
 
         };
@@ -91,6 +95,36 @@ const UserDashboard = () => {
     return (
 
         <>
+            {loading && (
+                <div
+                    className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+                    style={{
+                        backgroundColor: "rgba(0, 0, 0, 0.25)",
+                        backdropFilter: "blur(6px)",
+                        WebkitBackdropFilter: "blur(6px)",
+                        zIndex: 9999,
+                    }}
+                >
+                    <div className="position-relative d-inline-flex justify-content-center align-items-center">
+                        <i
+                            className="spinner-border text-success"
+                            style={{ fontSize: "2.5rem" }}
+                        ></i>
+
+                        <div
+                            className="spinner-border spinner-border-sm text-light position-absolute"
+                            style={{
+                                width: "1.3rem",
+                                height: "1.3rem",
+                            }}
+                        ></div>
+                    </div>
+                </div>
+            )}
+
+
+
+
             <div className="container-fluid" >
 
                 <div className="main-content w-100">
@@ -106,15 +140,7 @@ const UserDashboard = () => {
                             <button className="btn btn-success"><i className="bi bi-plus-circle me-2"></i><a href="/reportissue" className="text-white text-decoration-none">New Report</a></button>
 
                         </div>
-                        {/* <div className="align-items-center">
-                            <button className="btn btn-success"><i className="bi bi-plus-circle me-2"></i><a href="/reportissue" className="text-white text-decoration-none">New Report</a></button>
-                            <img
-                                src={user.profileImage ? user.profileImage : "/p1.jpg"}
-                                className="avatar-img ms-2"
-                                style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-                                alt="Profile"
-                            />
-                        </div> */}
+
                     </header>
 
                     <div className="row g-4 mb-4">
@@ -153,7 +179,7 @@ const UserDashboard = () => {
                                         <th>Issue Details</th>
                                         <th>Status</th>
                                         <th>Date Submitted</th>
-                                        <th>Image</th>
+                                        <th>View</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -173,10 +199,10 @@ const UserDashboard = () => {
                                                     className="btn btn-sm"
                                                     onClick={() => openGallery(issue)}
                                                 >
-                                                    <i className="bi bi-image"></i>
-                                                    <span className="ms-1">View</span>
+                                                    <i className="bi bi-eye"></i>
                                                 </button>
-                                            </td>                                            <td><button className="btn btn-sm"><i className="bi bi-eye"></i></button></td>
+                                            </td>
+                                            <td><button className="btn btn-sm"><i className="bi bi-trash"></i></button></td>
                                         </tr>
 
                                     ))}
@@ -206,28 +232,31 @@ const UserDashboard = () => {
                             >
 
                                 {/* Header */}
-                                <div className="d-flex justify-between py-2 ">
+                                <div className="d-flex justify-content-between p-4 w-100 ">
 
                                     <div className="">
-                                        <h3 className="text-white text-xl font-semibold">
-                                            Issue: {selectedIssue.title}
+                                        <h3 className="text-white text-capitalize text-xl font-semibold">
+                                            {selectedIssue.title}
                                         </h3>
 
-                                        <p className="text-white text-md">
-                                           Location: {selectedIssue.location}
+                                        <p className="text-white text-capitalize text-md">
+                                            Location: {selectedIssue.location}
+                                        </p>
+                                        <p className="text-white text-capitalize text-md">
+                                            Description: {selectedIssue.description}
                                         </p>
                                     </div>
 
                                     <button
                                         onClick={closeGallery}
-                                        className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition"
+                                        className="text-white hover:text-gray-300"
                                     >
                                         ✕
                                     </button>
 
                                 </div>
 
-                                <div className=" modal-body flex-1 flex items-center justify-center relative">
+                                <div className=" modal-body flex-1 flex items-center justify-content-center relative">
 
                                     <img
                                         src={selectedIssue.imageUrl}
@@ -249,6 +278,11 @@ const UserDashboard = () => {
                 };
 
             </div>
+
+
+
+
+
 
 
 

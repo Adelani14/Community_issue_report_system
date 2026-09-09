@@ -2,12 +2,15 @@ import React from "react";
 import { useEffect, useState } from "react";
 // import axios from "axios";
 import axios from "../utils/axiosInstance";
+import { Link } from "react-router-dom";
 
 const recentreport = () => {
     const [reports, setReports] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchReports = async () => {
+            setLoading(true);
             try {
                 const token = localStorage.getItem("accessToken");
                 const res = await axios.get(
@@ -22,15 +25,63 @@ const recentreport = () => {
                 setReports(res.data);
             } catch (error) {
                 console.log(error);
+            } finally {
+                setLoading(false);
             }
         };
         fetchReports();
     }, []);
+
+
+    const [showGallery, setShowGallery] = useState(false);
+    const [selectedIssue, setSelectedIssue] = useState(null);
+
+
+
+    const openGallery = (issue) => {
+        setSelectedIssue(issue);
+        setShowGallery(true);
+    };
+
+    const closeGallery = () => {
+        setShowGallery(false);
+        setSelectedIssue(null);
+    };
+
+
     return (
 
 
 
         <>
+
+  {loading && (
+                <div
+                    className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+                    style={{
+                        backgroundColor: "rgba(0, 0, 0, 0.25)",
+                        backdropFilter: "blur(6px)",
+                        WebkitBackdropFilter: "blur(6px)",
+                        zIndex: 9999,
+                    }}
+                >
+                    <div className="position-relative d-inline-flex justify-content-center align-items-center">
+                        <i
+                            className="spinner-border text-success"
+                            style={{ fontSize: "2.5rem" }}
+                        ></i>
+
+                        <div
+                            className="spinner-border spinner-border-sm text-light position-absolute"
+                            style={{
+                                width: "1.3rem",
+                                height: "1.3rem",
+                            }}
+                        ></div>
+                    </div>
+                </div>
+            )}
+        
             <div className="card p-4">
                 <div className="d-flex justify-content-between mb-3">
                     <h5 className="fw-bold">My Recent Reports</h5>
@@ -49,6 +100,7 @@ const recentreport = () => {
                             <th>Issue Details</th>
                             <th>Status</th>
                             <th>Date Submitted</th>
+                            <th>View</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -59,14 +111,89 @@ const recentreport = () => {
                                     <div className="fw-bold">{issue.title}</div>
                                     <small className="text-muted"><i className="bi bi-geo-alt"></i> {issue.location}</small>
                                 </td>
-                                <td><span className="status-badge bg-success-subtle text-success">{issue.status}</span></td>
+                                <td><span className={"status-badge bg-success-subtle text-success "}>{issue.status}</span></td>
                                 <td>{new Date(issue.createdAt).toDateString()}</td>
-                                <td><button className="btn btn-sm"><i className="bi bi-pencil"></i></button></td>
+                                <td>
+                                    <button
+                                        className="btn btn-sm"
+                                        onClick={() => openGallery(issue)}
+                                    >
+                                        <i className="bi bi-eye"></i>
+                                    </button>
+                                </td>                                <td><button className="btn btn-sm"><i className="bi bi-trash"></i></button></td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-            </div>
+
+
+                {showGallery && selectedIssue && (
+                    <div
+                        className="modal fade show d-block"
+                        style={{
+                            background: "rgba(0,0,0,.9)",
+                            zIndex: 99999,
+                        }}
+                        onClick={closeGallery}
+                    >
+
+                        <div
+                            className="modal-dialog modal-fullscreen"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+
+                            {/* Header */}
+                            <div className="d-flex justify-content-between p-4 w-100 ">
+
+                                <div className="">
+                                    <h3 className="text-white text-capitalize text-xl font-semibold">
+                                        {selectedIssue.title}
+                                    </h3>
+
+                                    <p className="text-white text-capitalize text-md">
+                                        Location: {selectedIssue.location}
+                                    </p>
+                                    <p className="text-white text-capitalize text-md">
+                                        Description: {selectedIssue.description}
+                                    </p>
+                                </div>
+
+                                <button
+                                    onClick={closeGallery}
+                                    className="text-white hover:text-gray-300"
+                                >
+                                    ✕
+                                </button>
+
+                            </div>
+
+                            <div className=" modal-body flex-1 flex items-center justify-content-center relative">
+
+                                <img
+                                    src={selectedIssue.imageUrl}
+                                    alt={selectedIssue.title}
+                                    className="img-fluid"
+
+                                    style={{
+                                        maxHeight: "70vh",
+                                        objectFit: "contain",
+                                    }}
+                                />
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                )
+                }
+
+
+
+
+
+
+            </div >
 
         </>
     );

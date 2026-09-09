@@ -1,7 +1,49 @@
 import React from "react";
 import axios from "../utils/axiosInstance";
+import { useEffect, useState } from "react";
 
 const UserSidebar = () => {
+
+    const [user, setUser] = useState({});
+    const [userFirstname, setUserFirstname] = useState("");
+    const [userLastname, setUserLastname] = useState("");
+
+
+    useEffect(() => {
+
+        const fetchReports = async () => {
+
+            try {
+
+                const token = localStorage.getItem("accessToken");
+
+                // GET USER PROFILE
+                const profileRes = await axios.get(
+                    "https://community-issue-report-system-1.onrender.com/myprofile",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        },
+                        withCredentials: true
+                    }
+                );
+
+                setUser(profileRes.data);
+                setUserFirstname(profileRes.data.firstname);
+                setUserLastname(profileRes.data.lastname);
+            } catch (error) {
+                console.log(error);
+            }
+
+        };
+
+        fetchReports();
+
+    }, []);
+
+
+
+
 
     const handleLogout = async () => {
 
@@ -40,8 +82,19 @@ const UserSidebar = () => {
             <div className="offcanvas offcanvas-start" data-bs-backdrop="static" tabIndex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
                 <div className="offcanvas-header">
                     <div className="d-flex align-items-center mb-3 ps-2 gap-2">
-                        <i className="bi bi-activity text-success fs-4 me-2"></i>
-                        <h5 className="mb-0 fw-bold text-success">FixMyArea</h5>
+                        {/* <i className="bi bi-activity text-success fs-4 me-2"></i> */}
+                        <div className="">
+                            <img
+                                src={user.profileImage ? user.profileImage : "/p1.jpg"}
+                                className="avatar-img ms-2"
+                                style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+                                alt="Profile"
+                            />
+                        </div>
+                        <div className="d-flex flex-column">
+                            <h5 className="mb-0 fw-bold text-success">{userFirstname} {userLastname}</h5>
+                            <small className="text-muted">FixMyArea</small>
+                        </div>
                     </div>
 
                     <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -57,7 +110,7 @@ const UserSidebar = () => {
 
 
                     <div className="mt-5 ms-3 bt-3 pt-3">
-                        <button  className="nav-link text-danger d-flex align-items-center small" onClick={handleLogout}>
+                        <button className="nav-link text-danger d-flex align-items-center small" onClick={handleLogout}>
                             <i className="bi bi-box-arrow-left me-3"></i> Logout
                         </button>
                     </div>
