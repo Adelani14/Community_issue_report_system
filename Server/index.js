@@ -480,7 +480,7 @@ app.put("/updateStatus/:id", isAuth, isAdmin, async (req, res) => {
 })
 
 // ADMIN ROUTE TO DELETE ISSUE
-app.delete("/deleteIssue/:id", isAuth, isAdmin, async (req, res) => {
+app.delete("/deleteIssue/:id", isAuth, async (req, res) => {
 
     try {
 

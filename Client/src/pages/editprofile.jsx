@@ -133,7 +133,7 @@ function editprofile() {
                         value={firstname}
                         onChange={(e) => setFirstname(e.target.value)}
                         className="form-control mb-3"
-                        placeholder="First name"
+                        placeholder="First name" 
                     />
 
                     <input

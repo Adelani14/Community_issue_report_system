@@ -33,6 +33,38 @@ const recentreport = () => {
     }, []);
 
 
+
+    const deleteIssue = async (id) => {
+
+        try {
+
+            const confirmDelete = window.confirm("Are you sure you want to delete this report?")
+
+            if (!confirmDelete) return
+
+            const token = localStorage.getItem("accessToken")
+
+            await axios.delete(
+                `https://community-issue-report-system-1.onrender.com/deleteIssue/${id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            )
+
+            alert("Report deleted")
+
+            fetchReports() // refresh table
+
+        } catch (err) {
+            console.log(err)
+        }
+
+    }
+
+
+
     const [showGallery, setShowGallery] = useState(false);
     const [selectedIssue, setSelectedIssue] = useState(null);
 
@@ -55,7 +87,7 @@ const recentreport = () => {
 
         <>
 
-  {loading && (
+            {loading && (
                 <div
                     className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
                     style={{
@@ -81,7 +113,7 @@ const recentreport = () => {
                     </div>
                 </div>
             )}
-        
+
             <div className="card p-4">
                 <div className="d-flex justify-content-between mb-3">
                     <h5 className="fw-bold">My Recent Reports</h5>
@@ -106,7 +138,7 @@ const recentreport = () => {
                     </thead>
                     <tbody>
                         {reports.map((issue) => (
-                            <tr>
+                            <tr key={issue._id}>
                                 <td>
                                     <div className="fw-bold">{issue.title}</div>
                                     <small className="text-muted"><i className="bi bi-geo-alt"></i> {issue.location}</small>
@@ -120,7 +152,8 @@ const recentreport = () => {
                                     >
                                         <i className="bi bi-eye"></i>
                                     </button>
-                                </td>                                <td><button className="btn btn-sm"><i className="bi bi-trash"></i></button></td>
+                                </td>
+                                <td><button className="btn btn-sm"><i onClick={() => deleteIssue(issue._id)} className="bi bi-trash"></i></button></td>
                             </tr>
                         ))}
                     </tbody>
