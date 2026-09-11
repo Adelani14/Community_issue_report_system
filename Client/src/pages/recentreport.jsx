@@ -9,6 +9,7 @@ const recentreport = () => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+
         const fetchReports = async () => {
             setLoading(true);
             try {
@@ -53,9 +54,9 @@ const recentreport = () => {
                 }
             )
 
-            alert("Report deleted")
+            alert("Report deleted successfully")
 
-            fetchReports() // refresh table
+            fetchReports(); // refresh table
 
         } catch (err) {
             console.log(err)
@@ -126,38 +127,40 @@ const recentreport = () => {
                 <div className="mb-3">
                     <input type="text" className="form-control" placeholder="Search my reports..." />
                 </div>
-                <table className="table align-middle">
-                    <thead className="table-light">
-                        <tr>
-                            <th>Issue Details</th>
-                            <th>Status</th>
-                            <th>Date Submitted</th>
-                            <th>View</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {reports.map((issue) => (
-                            <tr key={issue._id}>
-                                <td>
-                                    <div className="fw-bold">{issue.title}</div>
-                                    <small className="text-muted"><i className="bi bi-geo-alt"></i> {issue.location}</small>
-                                </td>
-                                <td><span className={"status-badge bg-success-subtle text-success "}>{issue.status}</span></td>
-                                <td>{new Date(issue.createdAt).toDateString()}</td>
-                                <td>
-                                    <button
-                                        className="btn btn-sm"
-                                        onClick={() => openGallery(issue)}
-                                    >
-                                        <i className="bi bi-eye"></i>
-                                    </button>
-                                </td>
-                                <td><button className="btn btn-sm"><i onClick={() => deleteIssue(issue._id)} className="bi bi-trash"></i></button></td>
+                <div className="table-responsive">
+                    <table className="table align-middle">
+                        <thead className="table-light">
+                            <tr>
+                                <th>Issue Details</th>
+                                <th>Status</th>
+                                <th>Date Submitted</th>
+                                <th>View</th>
+                                <th>Action</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {reports.map((issue) => (
+                                <tr key={issue._id}>
+                                    <td>
+                                        <div className="fw-bold">{issue.title}</div>
+                                        <small className="text-muted"><i className="bi bi-geo-alt"></i> {issue.location}</small>
+                                    </td>
+                                    <td><span className={"status-badge bg-success-subtle text-success "}>{issue.status}</span></td>
+                                    <td>{new Date(issue.createdAt).toDateString()}</td>
+                                    <td>
+                                        <button
+                                            className="btn btn-sm"
+                                            onClick={() => openGallery(issue)}
+                                        >
+                                            <i className="bi bi-eye"></i>
+                                        </button>
+                                    </td>
+                                    <td><button className="btn btn-sm"><i onClick={() => deleteIssue(issue._id)} className="bi bi-trash"></i></button></td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
 
 
                 {showGallery && selectedIssue && (
