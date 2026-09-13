@@ -3,6 +3,7 @@ import UserSidebar from "../components/usersidebar";
 import { useEffect, useState } from "react";
 import axios from "../utils/axiosInstance";
 import { Link } from "react-router-dom";
+import MobileBottomNav from "../components/MobileBottomNav"
 
 const UserDashboard = () => {
     const [dashboardStats, setDashboardStats] = useState({
@@ -127,7 +128,7 @@ const UserDashboard = () => {
 
             <div className="container-fluid" >
 
-                <div className="main-content w-100">
+                <div className=" mb-5 main-content w-100">
                     <header className="d-flex justify-content-between align-items-center mb-4">
                         <div>
                             <div className="d-flex align-items-center mb-4 ps-2 gap-2">
@@ -277,6 +278,8 @@ const UserDashboard = () => {
                     )
                 };
 
+
+                <MobileBottomNav />
             </div>
 
 

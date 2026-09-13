@@ -374,7 +374,7 @@ app.get("/mylimitedissues", isAuth, async (req, res) => {
 
         const issues = await Issue.find({ reportedBy: userID })
             .sort({ createdAt: -1 })
-            .limit(2);
+            .limit(5);
 
         res.json(issues);
 

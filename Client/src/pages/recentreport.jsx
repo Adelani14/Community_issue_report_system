@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 // import axios from "axios";
 import axios from "../utils/axiosInstance";
 import { Link } from "react-router-dom";
+import MobileBottomNav from "../components/MobileBottomNav"
 
 const recentreport = () => {
     const [reports, setReports] = useState([]);
@@ -118,8 +119,8 @@ const recentreport = () => {
             <div className="card p-4">
                 <div className="d-flex justify-content-between mb-3">
                     <h5 className="fw-bold">My Recent Reports</h5>
-                    <div className=" d-flex gap-2">
-                        <button className="btn btn-sm btn-outline-primary" onClick={() => window.location.href = '/reportissue'}><i className="bi bi-plus"></i> New Report</button>
+                    <div className=" gap-2 d-none d-md-flex">
+                        <button className="btn btn-sm btn-outline-primary" onClick={() => window.location.href = '/reportissue'}><i className="bi bi-plus"></i> New</button>
                         <button className="btn btn-sm btn-outline-success" onClick={() => window.location.href = '/userdashboard'}><i className="bi bi-grid"></i> Dashboard</button>
 
                     </div>
@@ -127,7 +128,7 @@ const recentreport = () => {
                 <div className="mb-3">
                     <input type="text" className="form-control" placeholder="Search my reports..." />
                 </div>
-                <div className="table-responsive">
+                <div className="table-responsive mb-5">
                     <table className="table align-middle">
                         <thead className="table-light">
                             <tr>
@@ -161,6 +162,9 @@ const recentreport = () => {
                         </tbody>
                     </table>
                 </div>
+
+
+
 
 
                 {showGallery && selectedIssue && (
@@ -228,7 +232,7 @@ const recentreport = () => {
 
 
 
-
+                <MobileBottomNav />
             </div >
 
         </>

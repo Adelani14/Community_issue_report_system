@@ -6,6 +6,8 @@ const IssueSchema = new mongoose.Schema({
     priority: String,
     description: String,
     location: String,
+    longlocation: String,
+    latlocation: String,
     imageUrl: String,
 
     status: {

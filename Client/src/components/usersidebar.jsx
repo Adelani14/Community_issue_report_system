@@ -74,7 +74,7 @@ const UserSidebar = () => {
 
     return (
         <>
-            <button className="btn btn-outline-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+            <button className="btn btn-outline-success d-none d-md-block" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
                 <span className="bi bi-list"></span>
             </button>
 

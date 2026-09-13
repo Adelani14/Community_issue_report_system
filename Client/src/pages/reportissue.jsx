@@ -1,7 +1,27 @@
 import { useState, useEffect } from "react";
-// import axios from "axios";
-// import axios from "utils/axiosInstance";
 import axios from "../utils/axiosInstance";
+import "leaflet/dist/leaflet.css";
+import MobileBottomNav from "../components/MobileBottomNav"
+// import LocationPicker from "../components/LocationPicker"
+import {
+    MapContainer,
+    TileLayer,
+    Marker,
+    Popup,
+    useMap,
+} from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+
+
+const MapController = ({ position }) => {
+    const map = useMap();
+
+    if (position) {
+        map.flyTo(position, 16);
+    }
+
+    return null
+}
 
 const reportissue = () => {
     const [mediafile, setmediafile] = useState(null)
@@ -10,15 +30,65 @@ const reportissue = () => {
     const [priority, setPriority] = useState("");
     const [description, setDescription] = useState("");
     const [location, setLocation] = useState("");
+    const [longlocation, setLonglocation] = useState("");
+    const [latlocation, setLatlocation] = useState("");
     const [loading, setLoading] = useState(false);
     const [notfilled, setNotfilled] = useState(false);
     const url = 'https://community-issue-report-system-1.onrender.com/upload'
 
 
 
+    const [position, setPosition] = useState(true);
+    const [maploading, setMaploading] = useState(false);
+    const [displayMap, setDisplayMap] = useState(false);
+
+    const closeMap = () => {
+        setDisplayMap(false)
+    }
+
+    const getLocation = () => {
+        if (!navigator.geolocation) {
+            alert("Geolocation is not supported by your browser.");
+            return;
+        }
+
+        setMaploading(true);
+        // setDisplayMap(true);
+
+        navigator.geolocation.getCurrentPosition(
+            (location) => {
+                const { latitude, longitude } = location.coords;
+
+                setPosition([latitude, longitude]);
+                setLonglocation(position[0])
+                setLatlocation(position[1])
+                console.log(position)
+                setMaploading(false);
+            },
+            (error) => {
+                console.log(error);
+                setMaploading(false);
+
+                alert("Unable to get your location.");
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0,
+            }
+        );
+    };
+
+    useEffect(() => {
+
+        getLocation();
+    }, [])
+
+
     const SubmitReport = () => {
 
-        if (!title || !issuetype || !description || !location) {
+
+        if (!title || !issuetype || !description || !location || !longlocation) {
             setNotfilled(true)
             setTimeout(() => {
                 setNotfilled(false)
@@ -37,6 +107,9 @@ const reportissue = () => {
         formData.append("priority", priority);
         formData.append("description", description);
         formData.append("location", location);
+        formData.append("longlocation", longlocation);
+        formData.append("latlocation", latlocation);
+        
 
         const token = localStorage.getItem("accessToken");
 
@@ -112,7 +185,7 @@ const reportissue = () => {
 
 
 
-            <div className="container p-3" style={{ maxWidth: '900px' }}>
+            <div className="container p-3 mb-5" style={{ maxWidth: '900px' }}>
                 <div className="mb-4 ">
                     <span className="badge bg-success-subtle text-success mb-2">Step 1 of 1 | Issue Reporting Form</span>
                     <h2 className="fw-bold">Report a New Issue</h2>
@@ -219,21 +292,39 @@ const reportissue = () => {
                             <label htmlFor="location" className="form-label fw-bold small">Exact Location <span className="text-danger">*</span></label>
                             <div className="input-group">
                                 <span className="input-group-text bg-white"><i className="bi bi-geo-alt"></i></span>
+
+
                                 <input
                                     type="text"
                                     className="form-control"
                                     onChange={(e) => setLocation(e.target.value)}
                                 />
-                                <button className="btn btn-link text-success text-decoration-none fw-bold small" type="button">Use GPS</button>
+
                             </div>
                         </div>
+                        {position && (
+                            <div className="form-check form-switch">
+                                <input
+                                    className="form-check-input bg-success"
+                                    type="checkbox"
+                                    onClick={getLocation}
+                                />
+
+                                <label
+                                    className="form-check-label fw-semibold text-success text-decoration-none fw-bold "
+                                    htmlFor="position"
+                                >
+                                    {maploading ? "Getting location..." : "Allow GPS"}
+                                </label>
+                            </div>
+                        )}
 
                         <div className="mb-4">
                             <label htmlFor="mediafile" className="form-label fw-bold small">Upload Evidence</label>
                             <div className="border border-2 border-dashed rounded-3 p-5 text-center bg-light">
                                 <i className="bi bi-cloud-arrow-up display-5 text-muted"></i><br></br>
                                 <input
-                                 type="file" id="mediafile" className="w-25 " onChange={(e) => { setmediafile(e.target.files) }} />
+                                    type="file" id="mediafile" className="w-25 " onChange={(e) => { setmediafile(e.target.files) }} />
 
                                 <p className="mb-0 mt-2 fw-bold">Click or drag photo to upload</p>
                                 <small className="text-muted">PNG, JPG or GIF max of 10MB</small>
@@ -261,10 +352,60 @@ const reportissue = () => {
                         <button className="btn btn-outline-secondary btn-lg flex-grow-1 py-3"> <a href="/userdashboard">Cancel</a></button>
 
                     </div>
-                </div>
-            </div>
+                </div >
+            </div >
 
 
+
+            <MobileBottomNav />
+
+
+
+
+
+            {
+                displayMap && (
+
+
+                    <div className="d-flex gap-3 justify-content-between w-50  ">
+
+                        <MapContainer
+                            center={[6.5244, 3.3792]}
+                            zoom={13}
+                            style={{ height: "400px", width: "100%" }}
+                            className="my-4 "
+                        >
+
+
+                            <TileLayer
+                                attribution='&copy; OpenStreetMap contributors'
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            />
+
+                            {position && (
+                                <>
+                                    <Marker position={position}>
+                                        <Popup>
+                                            You are here 📍
+                                        </Popup>
+                                    </Marker>
+
+                                    <MapController position={position} />
+                                </>
+                            )}
+                        </MapContainer>
+
+                        <div className=" ">
+                            <button
+                                onClick={closeMap}
+                                className="text-white hover:text-gray-300  "
+                            >
+                                ✕
+                            </button>
+                        </div>
+                    </div>
+                )
+            }
         </>
     );
 }
