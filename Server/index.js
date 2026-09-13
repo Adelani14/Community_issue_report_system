@@ -210,6 +210,8 @@ app.post("/upload", isAuth, upload.single("image"), async (req, res) => {
             priority,
             description,
             location,
+            longlocation,
+            latlocation,
             imageUrl,
             reportedBy: userID
         });

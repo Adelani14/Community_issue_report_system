@@ -244,6 +244,10 @@ const UserDashboard = () => {
                                             Location: {selectedIssue.location}
                                         </p>
                                         <p className="text-white text-capitalize text-md">
+                                            Longitude: {selectedIssue.longlocation}
+                                            Latitude: {selectedIssue.latlocation}
+                                        </p>
+                                        <p className="text-white text-capitalize text-md">
                                             Description: {selectedIssue.description}
                                         </p>
                                     </div>
