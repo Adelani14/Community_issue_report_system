@@ -12,7 +12,7 @@ const {
     forgotPasswordEmail,
     resetPasswordEmail,
     signUpEmail
-} = require("../services");
+} = require("../services/email");
 
 
 // ======================================================
