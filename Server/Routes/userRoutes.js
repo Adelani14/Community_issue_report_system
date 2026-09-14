@@ -16,7 +16,7 @@ const {
     updateProfile,
 
     forgotPassword,
-    resetPassword,
+    resetPassword
 } = require("../controllers/allUserController")
 
 
