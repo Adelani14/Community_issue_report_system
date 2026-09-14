@@ -29,7 +29,7 @@
 
 const { jwt } = require("jsonwebtoken");
 
-export const CreateAccessToken = (userID, role) => {
+const CreateAccessToken = (userID, role) => {
 
     return jwt.sign(
         { userID, role },
@@ -43,7 +43,7 @@ export const CreateAccessToken = (userID, role) => {
 
 
 
-export const CreateRefreshToken = (userID, role) => {
+const CreateRefreshToken = (userID, role) => {
 
     return jwt.sign(
         { userID, role },
@@ -53,4 +53,10 @@ export const CreateRefreshToken = (userID, role) => {
         }
     );
 
+};
+
+
+module.exports = {
+    CreateAccessToken,
+    CreateRefreshToken,
 };
