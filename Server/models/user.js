@@ -7,6 +7,17 @@ const userSchema = new mongoose.Schema({
     email: String,
     password: String,
 
+
+    resetPasswordToken: {
+        type: String,
+        default: null
+    },
+
+    resetPasswordExpire: {
+        type: Date,
+        default: null
+    },
+
     role: {
         type: String,
         enum: ["user", "admin"],
@@ -16,6 +27,11 @@ const userSchema = new mongoose.Schema({
     profileImage: {
         type: String,
         default: ""
+    },
+
+    refreshToken: {
+        type: String,
+        default: null
     }
 
 })
