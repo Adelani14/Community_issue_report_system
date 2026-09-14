@@ -27,7 +27,7 @@
 
 
 
-import jwt from "jsonwebtoken";
+const { jwt } = require("jsonwebtoken");
 
 export const CreateAccessToken = (userID, role) => {
 
