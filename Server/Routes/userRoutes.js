@@ -16,9 +16,8 @@ const {
     updateProfile,
 
     forgotPassword,
-    resetPassword
-
-} = require("../controller/userController.js");
+    resetPassword,
+} = require("../controllers/allUserController")
 
 
 // ==============================
