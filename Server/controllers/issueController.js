@@ -18,7 +18,7 @@ const createIssue = async (req, res) => {
             location
         } = req.body;
 
-        const imageUrl = req.file?.path || null;
+        const imageUrl = req.file?.path;
 
         const newIssue = new Issue({
             title,
