@@ -13,7 +13,11 @@ const {
     getMyLimitedIssues,
     getDashboardStats,
     deleteIssue,
-    getAdminLimitedIssues
+    getAdminLimitedIssues,
+    getAdminDashboardStats,
+    getAllIssues,
+    getAdminProfile,
+    updateIssueStatus
 } = require("../controllers/issueController");
 
 
@@ -37,6 +41,11 @@ router.get(
     isAuth,
     getMyLimitedIssues
 );
+router.get(
+    "/AdminAllIssues",
+    isAuth,
+    getAllIssues
+);
 
 router.get(
     "/AdminLimitedIssues",
@@ -51,7 +60,26 @@ router.get(
     isAuth,
     getDashboardStats
 );
+router.get(
+    "/AdminDashboardStats",
+    isAuth,
+    isAdmin,
+    getAdminDashboardStats
+);
+router.get(
+    "/AdminProfile",
+    isAuth,
+    isAdmin,
+    getAdminProfile
+);
 
+
+// Update issue status
+router.put(
+    "/updateStatus/:id",
+    isAuth,
+    updateIssueStatus
+);
 
 router.delete(
     "/deleteIssue/:id",
