@@ -293,8 +293,6 @@ const getAdminProfile = async (req, res) => {
 };
 
 
-const Issue = require("../models/issue");
-
 
 // ===============================
 // REPORT / UPLOAD ISSUE
