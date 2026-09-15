@@ -5,6 +5,7 @@ const router = express.Router();
 const upload = require("../multer.js")
 
 const isAuth = require("../isAuth");
+const isAdmin = require("../isadmin.js");
 
 const {
     createIssue,
@@ -40,6 +41,7 @@ router.get(
 router.get(
     "/AdminLimitedIssues",
     isAuth,
+    isAdmin,
     getAdminLimitedIssues
 );
 
