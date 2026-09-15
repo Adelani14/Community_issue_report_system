@@ -172,11 +172,39 @@ const deleteIssue = async (req, res) => {
     }
 };
 
+const getAdminLimitedIssues = async (req, res) => {
+
+    try {
+
+        const issues =
+            await Issue.find()
+                .populate(
+                    "reportedBy",
+                    "firstname lastname email profileImage"
+                )
+                .sort({
+                    createdAt: -1
+                })
+                .limit(5);
+
+        res.json(issues);
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            message: "Server error"
+        });
+    }
+};
+
 
 module.exports = {
     createIssue,
     getMyIssues,
     getMyLimitedIssues,
     getDashboardStats,
-    deleteIssue
+    deleteIssue,
+    getAdminLimitedIssues
 };

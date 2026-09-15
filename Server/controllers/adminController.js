@@ -91,7 +91,7 @@ const getAdminLimitedIssues = async (req, res) => {
                 .sort({
                     createdAt: -1
                 })
-                .limit(3);
+                .limit(5);
 
         res.json(issues);
 

@@ -11,7 +11,8 @@ const {
     getMyIssues,
     getMyLimitedIssues,
     getDashboardStats,
-    deleteIssue
+    deleteIssue,
+    getAdminLimitedIssues
 } = require("../controllers/issueController");
 
 
@@ -34,6 +35,12 @@ router.get(
     "/mylimitedissues",
     isAuth,
     getMyLimitedIssues
+);
+
+router.get(
+    "/AdminLimitedIssues",
+    isAuth,
+    getAdminLimitedIssues
 );
 
 
