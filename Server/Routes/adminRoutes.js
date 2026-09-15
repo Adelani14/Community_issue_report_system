@@ -3,21 +3,20 @@ const express = require("express");
 const router = express.Router();
 
 const isAuth = require("../isAuth");
-const isAdmin = require("../isadmin.js");
+// const isAdmin = require("../isadmin.js");
 
 const {
     getAdminDashboardStats,
     getAllIssues,
     getAdminLimitedIssues,
     getAdminProfile
-} = require("../controllers/adminController");
+} = require("../controllers/adminController.js");
 
 
 // Admin dashboard statistics
 router.get(
     "/admindashboardstats",
     isAuth,
-    isAdmin,
     getAdminDashboardStats
 );
 
@@ -26,7 +25,6 @@ router.get(
 router.get(
     "/adminallissues",
     isAuth,
-    isAdmin,
     getAllIssues
 );
 
@@ -35,7 +33,6 @@ router.get(
 router.get(
     "/adminallissueslimit",
     isAuth,
-    isAdmin,
     getAdminLimitedIssues
 );
 
@@ -44,7 +41,6 @@ router.get(
 router.get(
     "/adminprofile",
     isAuth,
-    isAdmin,
     getAdminProfile
 );
 
