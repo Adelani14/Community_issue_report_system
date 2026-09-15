@@ -7,7 +7,7 @@ require("./Connection");
 
 const userRoutes = require("./Routes/userRoutes");
 const issueRoutes = require("./Routes/issueRoutes");
-const adminRoutes = require("./Routes/adminRoutes");
+// const adminRoutes = require("./Routes/adminRoutes");
 
 const app = express();
 

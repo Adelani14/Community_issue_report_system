@@ -1,48 +1,48 @@
-const express = require("express");
+// const express = require("express");
 
-const router = express.Router();
+// const router = express.Router();
 
-const isAuth = require("../isAuth");
-// const isAdmin = require("../isadmin.js");
+// const isAuth = require("../isAuth");
+// // const isAdmin = require("../isadmin.js");
 
-const {
-    getAdminDashboardStats,
-    getAllIssues,
-    getAdminLimitedIssues,
-    getAdminProfile
-} = require("../controllers/adminController.js");
-
-
-// Admin dashboard statistics
-router.get(
-    "/admindashboardstats",
-    isAuth,
-    getAdminDashboardStats
-);
+// const {
+//     getAdminDashboardStats,
+//     getAllIssues,
+//     getAdminLimitedIssues,
+//     getAdminProfile
+// } = require("../controllers/adminController.js");
 
 
-// Get all issues
-router.get(
-    "/adminallissues",
-    isAuth,
-    getAllIssues
-);
+// // Admin dashboard statistics
+// router.get(
+//     "/admindashboardstats",
+//     isAuth,
+//     getAdminDashboardStats
+// );
 
 
-// Get limited issues
-router.get(
-    "/adminallissueslimit",
-    isAuth,
-    getAdminLimitedIssues
-);
+// // Get all issues
+// router.get(
+//     "/adminallissues",
+//     isAuth,
+//     getAllIssues
+// );
 
 
-// Admin profile
-router.get(
-    "/adminprofile",
-    isAuth,
-    getAdminProfile
-);
+// // Get limited issues
+// router.get(
+//     "/adminallissueslimit",
+//     isAuth,
+//     getAdminLimitedIssues
+// );
 
 
-module.exports = router;
+// // Admin profile
+// router.get(
+//     "/adminprofile",
+//     isAuth,
+//     getAdminProfile
+// );
+
+
+// module.exports = router;
