@@ -61,15 +61,14 @@ router.get(
     getDashboardStats
 );
 router.get(
-    "/AdminDashboardStats",
+    "/adminDashboardStats",
     isAuth,
-    isAdmin,
+    // isAdmin,
     getAdminDashboardStats
 );
 router.get(
     "/AdminProfile",
     isAuth,
-    isAdmin,
     getAdminProfile
 );
 
