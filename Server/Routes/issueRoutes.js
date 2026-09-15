@@ -44,6 +44,7 @@ router.get(
 router.get(
     "/AdminAllIssues",
     isAuth,
+    isAdmin,
     getAllIssues
 );
 
@@ -63,7 +64,7 @@ router.get(
 router.get(
     "/adminDashboardStats",
     isAuth,
-    // isAdmin,
+    isAdmin,
     getAdminDashboardStats
 );
 router.get(
@@ -77,6 +78,7 @@ router.get(
 router.put(
     "/updateStatus/:id",
     isAuth,
+    isAdmin,
     updateIssueStatus
 );
 

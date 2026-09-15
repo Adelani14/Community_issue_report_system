@@ -73,6 +73,19 @@ const SignUp = async (req, res) => {
 // LOGIN
 // ======================================================
 
+const pingServer = async (req, res) => {
+    try {
+
+        return res.status(200).json({
+            message: "server is awake"
+        });
+
+
+    } catch {
+        console.log(error)
+    }
+}
+
 const Login = async (req, res) => {
 
     const {
@@ -520,6 +533,7 @@ module.exports = {
     updateProfile,
 
     forgotPassword,
-    resetPassword
+    resetPassword,
+    pingServer
 
 };

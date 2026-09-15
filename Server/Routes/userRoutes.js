@@ -16,7 +16,8 @@ const {
     updateProfile,
 
     forgotPassword,
-    resetPassword
+    resetPassword,
+    pingServer
 } = require("../controllers/allUserController")
 
 
@@ -56,6 +57,11 @@ router.get(
     "/firstname",
     isAuth,
     getFirstname
+);
+router.get(
+    "/ping",
+   
+    pingServer
 );
 
 router.get(
