@@ -13,19 +13,13 @@ const AdminRecentReport = () => {
 
         try {
 
-            const token = localStorage.getItem("accessToken");
 
 
 
             // Fetch recent reports
             const res = await axios.get(
-                "https://community-issue-report-system-1.onrender.com/adminallissues",
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    },
-                    withCredentials: true
-                }
+                "/AdminAllIssues",
+               
             );
             setReports(res.data);
         } catch (error) {
@@ -46,13 +40,9 @@ const AdminRecentReport = () => {
             const token = localStorage.getItem("accessToken")
 
             await axios.put(
-                `https://community-issue-report-system-1.onrender.com/updateStatus/${id}`,
+                `/updateStatus/${id}`,
                 { status: newStatus },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
+               
             )
 
 
@@ -77,12 +67,8 @@ const AdminRecentReport = () => {
             const token = localStorage.getItem("accessToken")
 
             await axios.delete(
-                `https://community-issue-report-system-1.onrender.com/deleteIssue/${id}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
+                `/deleteIssue/${id}`,
+               
             )
 
             alert("Report deleted")

@@ -1,9 +1,7 @@
 import React from "react";
 import AdminSidebar from "../components/adminsidebar";
 import { useEffect, useState } from "react";
-// import axios from "axios";
-// import axios from "utils/axiosInstance";
-// import axios from "../../utils/axiosInstance"
+
 import axios from "../utils/axiosInstance";
 
 const admindashboard = () => {
@@ -25,78 +23,56 @@ const admindashboard = () => {
 
 
     useEffect(() => {
-
-        const Reports = async () => {
-
-            try {
-
-                const token = localStorage.getItem("accessToken");
-
-                // fetch user firstname 
-                const userRes = await axios.get(
-                    "https://community-issue-report-system-1.onrender.com/firstname",
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        },
-                        withCredentials: true
-                    }
-                );
-                setUserFirstname(userRes.data);
-
-                // fetch user profile
-                const profileRes = await axios.get(
-                    "https://community-issue-report-system-1.onrender.com/adminprofile",
-
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    }
-                )
-
-                setUser(profileRes.data)
-
-
-                // Fetch admin dashboard stats
-                const dashboardRes = await axios.get(
-                    "https://community-issue-report-system-1.onrender.com/admindashboardstats",
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        },
-                        withCredentials: true
-                    }
-                );
-                setDashboardStats(dashboardRes.data);
-
-            } catch (error) {
-                console.error("Error fetching reports:", error);
-            }
-
-
-        };
-
-        Reports()
+        fetchReports();
+        Reports();
+        fetchDashboardstat();
     }, []);
+
+
+    const Reports = async () => {
+
+        try {
+
+            // fetch user firstname 
+            const userRes = await axios.get(
+                "/firstname",
+
+            );
+            setUserFirstname(userRes.data);
+
+
+        } catch (error) {
+            console.error("Error fetching reports:", error);
+        }
+
+
+    };
+
+    const fetchDashboardstat = async () => {
+        try {
+            // Fetch admin dashboard stats
+            const dashboardRes = await axios.get(
+                "/adminDashboardStats",
+
+            );
+            setDashboardStats(dashboardRes.data);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     const fetchReports = async () => {
 
         try {
 
-            const token = localStorage.getItem("accessToken");
 
 
 
             // Fetch recent reports
             const res = await axios.get(
-                "https://community-issue-report-system-1.onrender.com/adminallissueslimit",
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    },
-                    withCredentials: true
-                }
+                "/AdminLimitedIssues",
+
             );
             setReports(res.data);
         } catch (error) {
@@ -106,23 +82,18 @@ const admindashboard = () => {
 
     };
 
-    fetchReports()
+
 
     // Function to change issue status
     const changeStatus = async (id, newStatus) => {
 
         try {
 
-            const token = localStorage.getItem("accessToken")
 
             await axios.put(
-                `https://community-issue-report-system-1.onrender.com/updateStatus/${id}`,
+                `/updateStatus/${id}`,
                 { status: newStatus },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
+
             )
 
 
@@ -144,15 +115,10 @@ const admindashboard = () => {
 
             if (!confirmDelete) return
 
-            const token = localStorage.getItem("accessToken")
 
             await axios.delete(
-                `https://community-issue-report-system-1.onrender.com/deleteIssue/${id}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
+                `/deleteIssue/${id}`,
+
             )
 
             alert("Report deleted")
@@ -182,17 +148,7 @@ const admindashboard = () => {
                         </div>
                         <p className="text-muted small">Global overview of community reports and infrastructure status.</p>
                     </div>
-                    {/* <div className="d-flex align-items-center gap-3">
-                        <div className=" align-items-center fw-bold text-success fs-4">
-                            <img
-                                src={user && user.profileImage ? user.profileImage : "p1.jpg"}
-                                className="avatar-img ms-2"
-                                style={{ width: "47px", height: "45px", borderRadius: "50%" }}
-                                alt="Profile"
-                                width="50"
-                            />
-                        </div>
-                    </div> */}
+
                 </header>
 
                 <div className="row g-4 mb-4">

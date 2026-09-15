@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 // import axios from "axios";
 import axios from "../utils/axiosInstance";
 import { Link } from "react-router-dom";
@@ -8,29 +8,35 @@ import MobileBottomNav from "../components/MobileBottomNav"
 const recentreport = () => {
     const [reports, setReports] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [search, setSearch] = useState("");
+    const [filter, setFilter] = useState("All");
+
+    const fetchReports = async () => {
+        setLoading(true);
+
+        try {
+            const token = localStorage.getItem("accessToken");
+
+            const res = await axios.get(
+                "/myissues",
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                    withCredentials: true
+                }
+            );
+
+            setReports(res.data);
+
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-
-        const fetchReports = async () => {
-            setLoading(true);
-            try {
-                const token = localStorage.getItem("accessToken");
-                const res = await axios.get(
-                    "https://community-issue-report-system-1.onrender.com/myissues",
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        },
-                        withCredentials: true
-                    }
-                );
-                setReports(res.data);
-            } catch (error) {
-                console.log(error);
-            } finally {
-                setLoading(false);
-            }
-        };
         fetchReports();
     }, []);
 
@@ -47,7 +53,7 @@ const recentreport = () => {
             const token = localStorage.getItem("accessToken")
 
             await axios.delete(
-                `https://community-issue-report-system-1.onrender.com/deleteIssue/${id}`,
+                `/deleteIssue/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -83,6 +89,27 @@ const recentreport = () => {
     };
 
 
+
+    const filteredReports = useMemo(() => {
+        const keyword = search.trim().toLowerCase();
+
+        return reports.filter((report) => {
+            const matchesSearch =
+                report.title?.toLowerCase().includes(keyword) ||
+                report.location?.toLowerCase().includes(keyword) ||
+                report.status?.toLowerCase().includes(keyword);
+
+            const matchesFilter =
+                filter === "All" ||
+                report.status === filter;
+
+            return matchesSearch && matchesFilter;
+        });
+    }, [reports, search, filter]);
+
+
+
+
     return (
 
 
@@ -116,6 +143,8 @@ const recentreport = () => {
                 </div>
             )}
 
+
+
             <div className="card p-4">
                 <div className="d-flex justify-content-between mb-3">
                     <h5 className="fw-bold">My Recent Reports</h5>
@@ -126,7 +155,13 @@ const recentreport = () => {
                     </div>
                 </div>
                 <div className="mb-3">
-                    <input type="text" className="form-control" placeholder="Search my reports..." />
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search Reports..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
                 </div>
                 <div className="table-responsive mb-5">
                     <table className="table align-middle">
@@ -140,14 +175,25 @@ const recentreport = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {reports.map((issue) => (
+                            {filteredReports.map((issue) => (
                                 <tr key={issue._id}>
                                     <td>
                                         <div className="fw-bold">{issue.title}</div>
-                                        <small className="text-muted"><i className="bi bi-geo-alt"></i> {issue.location}</small>
+                                        <small className="text-muted">
+                                            <i className="bi bi-geo-alt"></i> {issue.location}
+                                        </small>
                                     </td>
-                                    <td><span className={"status-badge bg-success-subtle text-success "}>{issue.status}</span></td>
-                                    <td>{new Date(issue.createdAt).toDateString()}</td>
+
+                                    <td>
+                                        <span className="status-badge bg-success-subtle text-success">
+                                            {issue.status}
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        {new Date(issue.createdAt).toDateString()}
+                                    </td>
+
                                     <td>
                                         <button
                                             className="btn btn-sm"
@@ -156,7 +202,15 @@ const recentreport = () => {
                                             <i className="bi bi-eye"></i>
                                         </button>
                                     </td>
-                                    <td><button className="btn btn-sm"><i onClick={() => deleteIssue(issue._id)} className="bi bi-trash"></i></button></td>
+
+                                    <td>
+                                        <button
+                                            className="btn btn-sm"
+                                            onClick={() => deleteIssue(issue._id)}
+                                        >
+                                            <i className="bi bi-trash"></i>
+                                        </button>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

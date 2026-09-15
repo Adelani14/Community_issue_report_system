@@ -3,7 +3,7 @@ import React from 'react';
 import { useState } from 'react';
 // import axios from 'axios';
 // import axios from 'utils/axiosInstance';
-import axios from "../utils/axiosInstance";
+import axios from "../utils/axiosInstance.js";
 
 
 
@@ -15,7 +15,7 @@ const Login = () => {
     const [notmatch, setNotmatch] = useState(false)
     const [notvalid, setNotvalid] = useState(false)
 
-    const endpoint = 'https://community-issue-report-system-1.onrender.com/login'
+    // const endpoint = 'https://community-issue-report-system-1.onrender.com/login'
 
     const submitDetails = async () => {
 
@@ -52,21 +52,25 @@ const Login = () => {
                 try {
                     const information = { email, password }
                     const result = await axios.post(
-                        endpoint,
+                        "/login",
                         information,
-                        { withCredentials: true }
+                        // { withCredentials: true }
                     )
 
                     if (result.status === 200) {
 
                         // SAVE TOKEN
-                        localStorage.setItem("accessToken", result.data.accessToken)
+                        localStorage.setItem("accessToken",
+                            result.data.accessToken);
+
+                        const role = result.data.user.role;
+
 
                         const signupbtn = document.getElementById('loginbtn')
                         signupbtn.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Logging in...`
 
                         setTimeout(() => {
-                            if (result.data.user.role === "admin") {
+                            if (role === "admin") {
                                 window.location.href = "/admindashboard"
                             } else {
                                 window.location.href = "/userdashboard"
@@ -105,7 +109,7 @@ const Login = () => {
                     </div>
 
                     <form>
-                        
+
                         <div className="mb-3">
                             <label className="form-label fw-bold small">Email Address</label>
                             <div className="input-group">
@@ -124,7 +128,7 @@ const Login = () => {
                         <div className="mb-3">
                             <div className="d-flex justify-content-between">
                                 <label className="form-label fw-bold small">Password</label>
-                                <a href="#" className="text-success small text-decoration-none">Forgot password?</a>
+                                <a href="/forgotpassword" className="text-success small text-decoration-none">Forgot password?</a>
                             </div>
                             <div className="input-group">
                                 <span className="input-group-text bg-light border-end-0"><i className="bi bi-lock"></i></span>

@@ -24,17 +24,11 @@ const UserDashboard = () => {
 
             try {
 
-                const token = localStorage.getItem("accessToken");
 
                 // GET USER PROFILE
                 const profileRes = await axios.get(
-                    "https://community-issue-report-system-1.onrender.com/myprofile",
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        },
-                        withCredentials: true
-                    }
+                    "/myprofile",
+
                 );
 
                 setUser(profileRes.data);
@@ -42,26 +36,16 @@ const UserDashboard = () => {
 
                 // Fetch dashboard stats
                 const dashboardRes = await axios.get(
-                    "https://community-issue-report-system-1.onrender.com/dashboardstats",
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        },
-                        withCredentials: true
-                    }
+                    "/dashboardstats",
+
                 );
 
                 setDashboardStats(dashboardRes.data);
 
                 // Fetch reports
                 const res = await axios.get(
-                    "https://community-issue-report-system-1.onrender.com/mylimitedissues",
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        },
-                        withCredentials: true
-                    }
+                    "/mylimitedissues",
+
                 );
 
                 setReports(res.data);
@@ -77,6 +61,38 @@ const UserDashboard = () => {
         fetchReports();
 
     }, []);
+
+
+
+
+    const deleteIssue = async (id) => {
+
+        try {
+
+            const confirmDelete = window.confirm("Are you sure you want to delete this report?")
+
+            if (!confirmDelete) return
+
+            const token = localStorage.getItem("accessToken")
+
+            await axios.delete(
+                `/deleteIssue/${id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            )
+
+            alert("Report deleted successfully")
+
+            fetchReports(); // refresh table
+
+        } catch (err) {
+            console.log(err)
+        }
+
+    }
 
 
 
@@ -203,8 +219,14 @@ const UserDashboard = () => {
                                                     <i className="bi bi-eye"></i>
                                                 </button>
                                             </td>
-                                            <td><button className="btn btn-sm"><i className="bi bi-trash"></i></button></td>
-                                        </tr>
+                                            <td>
+                                                <button
+                                                    className="btn btn-sm"
+                                                    onClick={() => deleteIssue(issue._id)}
+                                                >
+                                                    <i className="bi bi-trash"></i>
+                                                </button>
+                                            </td>                                        </tr>
 
                                     ))}
 
@@ -243,10 +265,7 @@ const UserDashboard = () => {
                                         <p className="text-white text-capitalize text-md">
                                             Location: {selectedIssue.location}
                                         </p>
-                                        <p className="text-white text-capitalize text-md">
-                                            Longitude: {selectedIssue.longlocation}
-                                            Latitude: {selectedIssue.latlocation}
-                                        </p>
+
                                         <p className="text-white text-capitalize text-md">
                                             Description: {selectedIssue.description}
                                         </p>

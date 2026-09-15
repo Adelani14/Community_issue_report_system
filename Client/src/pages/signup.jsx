@@ -15,7 +15,6 @@ const Signup = () => {
     const [firstnameinvalid, setFirstnameinvalid] = useState(false)
     const [lastnameinvalid, setLastnameinvalid] = useState(false)
 
-    const endpoint = 'https://community-issue-report-system-1.onrender.com/signup'
     const submitDetails = () => {
 
 
@@ -91,7 +90,7 @@ const Signup = () => {
 
 
                     const information = { email, password, firstname, lastname }
-                    axios.post(endpoint, information)
+                    axios.post("/signup", information)
                         .then((result) => {
                             // console.log(result);
                             if (result.status === 201) {

@@ -33,7 +33,7 @@ function MobileBottomNav() {
 
 
 
-                <NavLink to="/allproducts" className={({ isActive }) =>
+                <NavLink to="/account" className={({ isActive }) =>
                     `nav-item ${isActive ? "active" : ""}`
                 }>
                     <i className="bi bi-person fs-5"></i>
